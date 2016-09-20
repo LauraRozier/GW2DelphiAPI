@@ -4,24 +4,27 @@ Delphi (Object Pascal) wrapper for the GuildWars2 public API v1 and v2
 | Feature                         | Supported | Planned |
 | :------                         | :------:  | :------: |
 | `/v1/build.json`                |           | ✔       |
+| `/v1/colors.json`               |           | ✔       |
+| `/v1/continents.json`           |           | ✔       |
+| `/v1/event_details.json`        |           | ✔       |
 | `/v1/event_names.json`          |           | ✔       |
-| `/v1/map_names.json `           |           | ✔       |
-| `/v1/world_names.json `         |           | ✔       |
-| `/v1/event_details.json `       |           | ✔       |
-| `/v1/guild_details.json `       |           | ✔       |
-| `/v1/items.json `               |           | ✔       |
-| `/v1/item_details.json `        |           | ✔       |
-| `/v1/recipes.json `             |           | ✔       |
-| `/v1/recipe_details.json `      |           | ✔       |
-| `/v1/skins.json `               |           | ✔       |
-| `/v1/skin_details.json `        |           | ✔       |
-| `/v1/continents.json `          |           | ✔       |
-| `/v1/maps.json `                |           | ✔       |
-| `/v1/map_floor.json `           |           | ✔       |
-| `/v1/wvw/matches.json `         |           | ✔       |
-| `/v1/wvw/match_details.json `   |           | ✔       |
-| `/v1/wvw/objective_names.json ` |           | ✔       |
-| `/v2/quaggans.json `            |           | ✔       |
+| `/v1/events.json`               |           | ✔       |
+| `/v1/files.json`                |           | ✔       |
+| `/v1/guild_details.json`        |           | ✔       |
+| `/v1/item_details.json`         |           | ✔       |
+| `/v1/items.json`                |           | ✔       |
+| `/v1/map_floor.json`            |           | ✔       |
+| `/v1/map_names.json`            |           | ✔       |
+| `/v1/maps.json`                 |           | ✔       |
+| `/v1/recipe_details.json`       |           | ✔       |
+| `/v1/recipes.json`              |           | ✔       |
+| `/v1/skin_details.json`         |           | ✔       |
+| `/v1/skins.json`                |           | ✔       |
+| `/v1/world_names.json`          |           | ✔       |
+| `/v1/wvw/match_details.json`    |           | ✔       |
+| `/v1/wvw/matches.json`          |           | ✔       |
+| `/v1/wvw/objective_names.json`  |           | ✔       |
+| `/v2/quaggans`                  |           | ✔       |
 | `/v2/commerce/exchange`         |           | ✔       |
 | `/v2/commerce/listings`         |           | ✔       |
 | `/v2/commerce/prices`           |           | ✔       |
