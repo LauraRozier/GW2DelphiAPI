@@ -2,8 +2,8 @@
 Delphi (Object Pascal) wrapper for the GuildWars2 public API v1 and v2
 
 | Feature                                   | Supported | Planned |
-| :------:                                  | :------:  | :------: |
-| `render.guildwars2.com`                   |           | ❓       |
+| :------                                   | :------:  | :------: |
+| `render.guildwars2.com`                   |           | ❓️       |
 | `MumbleLink`                              |           | ❓️       |
 | `/v1/build.json`                          |           | ✔       |
 | `/v1/colors.json`                         |           | ✔       |
@@ -26,7 +26,7 @@ Delphi (Object Pascal) wrapper for the GuildWars2 public API v1 and v2
 | `/v1/wvw/match_details.json`              |           | ✔       |
 | `/v1/wvw/matches.json`                    |           | ✔       |
 | `/v1/wvw/objective_names.json`            |           | ✔       |
-| :------:                                  | :------:  | :------: |
+|                                           |           |         |
 | `/v2/account`                             |           | ✔       |
 | `/v2/account/achievements`                |           | ✔       |
 | `/v2/account/bank`                        |           | ✔       |
