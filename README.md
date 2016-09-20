@@ -36,8 +36,8 @@ Delphi (Object Pascal) wrapper for the GuildWars2 public API v1 and v2
 | `/v2/continents/:id/floors`     |           | ✔       |
 | `/v2/skins`                     |           | ✔       |
 | `/v2/maps`                      |           | ✔       |
-| `render.guildwars2.com`         |           | ✔       |
-| MumbleLink                      |           | ❌️       |
+| `render.guildwars2.com`         |           | ❓       |
+| `MumbleLink`                    |           | ❓️       |
 | `/v2/account`                   |           | ✔       |
 | `/v2/account/bank`              |           | ✔       |
 | `/v2/account/materials`         |           | ✔       |
