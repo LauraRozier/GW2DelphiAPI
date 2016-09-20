@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{7A9143E3-9C87-4179-BEF4-A1D28068F699}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Examples\DevTest\Development_Test.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Examples\FetchRaw\FetchRaw.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Development_Test">
+        <MSBuild Projects="Examples\DevTest\Development_Test.dproj"/>
+    </Target>
+    <Target Name="Development_Test:Clean">
+        <MSBuild Projects="Examples\DevTest\Development_Test.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Development_Test:Make">
+        <MSBuild Projects="Examples\DevTest\Development_Test.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FetchRaw">
+        <MSBuild Projects="Examples\FetchRaw\FetchRaw.dproj"/>
+    </Target>
+    <Target Name="FetchRaw:Clean">
+        <MSBuild Projects="Examples\FetchRaw\FetchRaw.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FetchRaw:Make">
+        <MSBuild Projects="Examples\FetchRaw\FetchRaw.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Development_Test;FetchRaw"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Development_Test:Clean;FetchRaw:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Development_Test:Make;FetchRaw:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
