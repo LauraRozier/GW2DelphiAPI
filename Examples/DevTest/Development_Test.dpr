@@ -23,7 +23,6 @@ var
   fVersion:       TGW2Version;
   fStringList:    TStringList;
   fTmpString:     string;
-  I:              Integer;
 
 begin
   try
@@ -48,7 +47,7 @@ begin
     WriteLn;
     WriteLn('Quaggans:');
     fStringList := TStringList.Create;
-    fGW2API.Misc.GetQuaggans(fGW2API.WebHandler, fStringList);
+    fGW2API.Misc.GetQuagganIDs(fGW2API.WebHandler, fStringList);
 
     for fTmpString in fStringList do
       WriteLn(fTmpString);

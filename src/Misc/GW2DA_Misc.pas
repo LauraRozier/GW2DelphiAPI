@@ -9,11 +9,10 @@ uses
 
 type
   TGW2APIMisc = class(TObject)
-    private
     public
       constructor Create;
       procedure GetBuild(aWebHandler: TWebHandler; aVersion: TGW2Version);
-      procedure GetQuaggans(aWebHandler: TWebHandler; aStringList: TStringList); //: TIDStringArray;
+      procedure GetQuagganIDs(aWebHandler: TWebHandler; aStringList: TStringList);
   end;
 
 implementation
@@ -26,11 +25,11 @@ end;
 
 procedure TGW2APIMisc.GetBuild(aWebHandler: TWebHandler; aVersion: TGW2Version);
 var
-  IResult:     string;
-  IJSONObject: TJSONObject;
+  Result:   string;
+  JSObject: TJSONObject;
 begin
-  IResult     := aWebHandler.FetchEndpoint(APIv2, v2Build, nil);
-  IJSONObject := TJSONObject.ParseJSONValue(IResult) as TJSONObject;
+  Result     := aWebHandler.FetchEndpoint(APIv2, v2Build, nil);
+  JSObject := TJSONObject.ParseJSONValue(Result) as TJSONObject;
 
   // Both of these fail... They return 0
   // FetchEndpoint returns the raw JSON string, eg: {"id":66577}
@@ -39,21 +38,21 @@ begin
   //   aVersion := TJson.JsonToObject<TGW2Version>(IJSONObject);
   //
 
-  aVersion.id := IJSONObject.GetValue<Integer>('id'); // Works
+  aVersion.id := JSObject.GetValue<Integer>('id'); // Works
 end;
 
 
-procedure TGW2APIMisc.GetQuaggans(aWebHandler: TWebHandler; aStringList: TStringList); //: TIDStringArray;
+procedure TGW2APIMisc.GetQuagganIDs(aWebHandler: TWebHandler; aStringList: TStringList);
 var
-  IResult:    string;
-  IJSONArr:   TJSONArray;
-  IJSONValue: TJSONValue;
+  Result:  string;
+  JSArr:   TJSONArray;
+  JSValue: TJSONValue;
 begin
-  IResult  := aWebHandler.FetchEndpoint(APIv2, v2Quaggans, nil);
-  IJSONArr := TJSONObject.ParseJSONValue(IResult) as TJSONArray;
+  Result := aWebHandler.FetchEndpoint(APIv2, v2Quaggans, nil);
+  JSArr  := TJSONObject.ParseJSONValue(Result) as TJSONArray;
 
-  for IJSONValue in IJSONArr do
-    aStringList.Add(IJSONValue.Value);
+  for JSValue in JSArr do
+    aStringList.Add(JSValue.Value);
 end;
 
 end.

@@ -35,96 +35,96 @@ end;
 
 function TWebHandler.SendRequest(aUrl: string): TErrorMessage;
 var
-  IResponse: string;
-  IError:    TErrorMessage;
+  Response: string;
+  Error:    TErrorMessage;
 begin
-   IError.HadError := False;
-   IError.Msg := '';
+   Error.HadError := False;
+   Error.Msg := '';
 
   try
-    IResponse := fHTTPClient.Get(aUrl);
+    Response := fHTTPClient.Get(aUrl);
   except
     // Indy protocol exception
     on E:EIdHTTPProtocolException do
     begin
-      IError.Msg := 'Error: Indy raised a protocol error!'       + sLineBreak +
-                    'HTTP status code: ' + IntToStr(E.ErrorCode) + sLineBreak +
-                    'Error message'      + E.Message             + sLineBreak;
-      IError.HadError := True;
+      Error.Msg := 'Error: Indy raised a protocol error!'       + sLineBreak +
+                   'HTTP status code: ' + IntToStr(E.ErrorCode) + sLineBreak +
+                   'Error message'      + E.Message             + sLineBreak;
+      Error.HadError := True;
     end;
     // Indy SSL Library exception
     on E:EIdOSSLCouldNotLoadSSLLibrary do
     begin
-      IError.Msg := 'Error: Indy could not load SSL library!' + sLineBreak +
-                    'Exception class: ' + E.ClassName                                + sLineBreak +
-                    'Error message: '   + E.Message                                  + sLineBreak;
-      IError.HadError := True;
+      Error.Msg := 'Error: Indy could not load SSL library!' + sLineBreak +
+                   'Exception class: ' + E.ClassName                                + sLineBreak +
+                   'Error message: '   + E.Message                                  + sLineBreak;
+      Error.HadError := True;
     end;
     // Indy server closed connection exception
     on E:EIdConnClosedGracefully do
     begin
-      IError.Msg := 'Error: Indy reports, that connection was closed by the server!' + sLineBreak +
-                    'Exception class: ' + E.ClassName                                + sLineBreak +
-                    'Error message: '   + E.Message                                  + sLineBreak;
-      IError.HadError := True;
+      Error.Msg := 'Error: Indy reports, that connection was closed by the server!' + sLineBreak +
+                   'Exception class: ' + E.ClassName                                + sLineBreak +
+                   'Error message: '   + E.Message                                  + sLineBreak;
+      Error.HadError := True;
     end;
     // Indy low-level socket exception
     on E:EIdSocketError do
     begin
-      IError.Msg := 'Error: Indy raised a socket error!'    + sLineBreak +
-                    'Error code: '  + IntToStr(E.LastError) + sLineBreak +
-                    'Error message' + E.Message             + sLineBreak;
-      IError.HadError := True;
+      Error.Msg := 'Error: Indy raised a socket error!'    + sLineBreak +
+                   'Error code: '  + IntToStr(E.LastError) + sLineBreak +
+                   'Error message' + E.Message             + sLineBreak;
+      Error.HadError := True;
     end;
     // Indy read-timeout exception
     on E:EIdReadTimeout do
     begin
-      IError.Msg := 'Error: Indy raised a read-timeout error!' + sLineBreak +
-                    'Exception class: ' + E.ClassName          + sLineBreak +
-                    'Error message: '   + E.Message            + sLineBreak;
-      IError.HadError := True;
+      Error.Msg := 'Error: Indy raised a read-timeout error!' + sLineBreak +
+                   'Exception class: ' + E.ClassName          + sLineBreak +
+                   'Error message: '   + E.Message            + sLineBreak;
+      Error.HadError := True;
     end;
     // All other Indy exceptions
     on E:EIdException do
     begin
-      IError.Msg := 'Error: Something went wrong with Indy!' + sLineBreak +
-                    'Exception class: ' + E.ClassName        + sLineBreak +
-                    'Error message: '   + E.Message          + sLineBreak;
-      IError.HadError := True;
+      Error.Msg := 'Error: Something went wrong with Indy!' + sLineBreak +
+                   'Exception class: ' + E.ClassName        + sLineBreak +
+                   'Error message: '   + E.Message          + sLineBreak;
+      Error.HadError := True;
     end;
     // All other Delphi exceptions
     on E:Exception do
     begin
-      IError.Msg := 'Error: Something non-Indy related raised an exception!' + sLineBreak +
-                    'Exception class: ' + E.ClassName                        + sLineBreak +
-                    'Error message: '   + E.Message                          + sLineBreak;
-      IError.HadError := True;
+      Error.Msg := 'Error: Something non-Indy related raised an exception!' + sLineBreak +
+                   'Exception class: ' + E.ClassName                        + sLineBreak +
+                   'Error message: '   + E.Message                          + sLineBreak;
+      Error.HadError := True;
     end;
   end;
 
-  if not IError.HadError then
-    IError.Msg := IResponse;
+  if not Error.HadError then
+    Error.Msg := Response;
 
-  Result := IError;
+  Result := Error;
 end;
 
 
 function TWebHandler.BuildParamString(aParams: TUrlParams): string;
 var
-  IParam:     TUrlParam;
-  IResultStr: string;
+  Param:     TUrlParam;
+  ResultStr: string;
 begin
-  IResultStr := '';
+  ResultStr := '';
 
-  for IParam in aParams do
+  for Param in aParams do
   begin
-    if IResultStr = '' then
-      IResultStr := '?' + IParam.Name + '=' + IParam.Value
+    if ResultStr = '' then
+      ResultStr := '?' + Param.Name + '=' + Param.Value
     else
-      IResultStr := IResultStr + '&' + IParam.Name + '=' + IParam.Value;
+      ResultStr := ResultStr + '&' + Param.Name + '=' + Param.Value;
   end;
 
-  Result := IResultStr;
+  Result := ResultStr;
 end;
 
 
@@ -138,20 +138,20 @@ function TWebHandler.FetchEndpoint(aVersion:  TAPIVersion;
                                    aFunction: TAPIFunction;
                                    aParams:   TUrlParams): string;
 var
-  IUrl, IResponseMsg: string;
-  IResponse         : TErrorMessage;
+  Url, ResponseMsg: string;
+  Response:         TErrorMessage;
 begin
-  IUrl := CONST_API_URL_BASE + CONST_API_Versions[aVersion] + '/' + CONST_API_Functions[aFunction];
+  Url := CONST_API_URL_BASE + CONST_API_Versions[aVersion] + '/' + CONST_API_Functions[aFunction];
 
   if (Length(aParams) > 0) and not (aParams = nil) then
-    IUrl := IUrl + BuildParamString(aParams);
+    Url := Url + BuildParamString(aParams);
 
-  IResponse := SendRequest(IUrl);
+  Response := SendRequest(Url);
 
-  if IResponse.HadError then
+  if Response.HadError then
     raise Exception.Create('Something went wrong with this request!');
 
-  Result := IResponse.Msg;
+  Result := Response.Msg;
 end;
 
 

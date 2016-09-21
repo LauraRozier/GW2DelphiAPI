@@ -64,65 +64,65 @@ type
 
   TGW2Version = class
     private
-      Fid: Integer;
+      fId: Integer;
     public
-      Property id: Integer Read Fid Write Fid;
+      Property id: Integer Read fId Write fId;
   end;
 
   TGW2Quaggan = class
     private
-      Fid:  string;
-      Furl: string;
+      fId:  string;
+      fUrl: string;
     public
-      property id:  string Read Fid  Write Fid;
-      property url: string Read Furl Write Furl;
+      property id:  string Read fId  Write fId;
+      property url: string Read fUrl Write fUrl;
   end;
 
   TGW2World = class
     private
-      Fid:   Integer;
-      FName: string;
+      fId:   Integer;
+      fName: string;
     public
-      property id:   Integer Read Fid   Write Fid;
-      property Name: string  Read FName Write FName;
+      property id:   Integer Read fId   Write fId;
+      property Name: string  Read fName Write fName;
   end;
 
   TGW2ColorDetail = class
     private
-      FBrightness: Integer;
-      FContrast:   Double;
-      FHue:        Integer;
-      FSaturation: Double;
-      FLightness:  Double;
-      FRGB:        TRGBArray; 
+      fBrightness: Integer;
+      fContrast:   Double;
+      fHue:        Integer;
+      fSaturation: Double;
+      fLightness:  Double;
+      fRGB:        TRGBArray;
       Function GetRGB(aIndex: Integer): Integer;
       Procedure SetRGB(aIndex, aValue: Integer);
     public
-      property Brightness:           Integer Read FBrightness Write FBrightness;
-      property Contrast:             Double  Read FContrast   Write FContrast;
-      property Hue:                  Integer Read FHue        Write FHue; 
-      property Saturation:           Double  Read FSaturation Write FSaturation;
-      property Lightness:            Double  Read FLightness  Write FLightness;
+      property Brightness:           Integer Read fBrightness Write fBrightness;
+      property Contrast:             Double  Read fContrast   Write fContrast;
+      property Hue:                  Integer Read fHue        Write fHue;
+      property Saturation:           Double  Read fSaturation Write fSaturation;
+      property Lightness:            Double  Read fLightness  Write fLightness;
       property RGB[aIndex: Integer]: Integer Read GetRGB      Write SetRGB;
   end;
 
   TGW2Color = class
     private
-      Fid:      Integer;
-      FName:    string;
-      FBaseRGB: TRGBArray;
-      FCloth:   TGW2ColorDetail;
-      FLeather: TGW2ColorDetail;
-      FMetal:   TGW2ColorDetail;
+      fId:      Integer;
+      fName:    string;
+      fBaseRGB: TRGBArray;
+      fCloth:   TGW2ColorDetail;
+      fLeather: TGW2ColorDetail;
+      fMetal:   TGW2ColorDetail;
       Function GetRGB(aIndex: Integer): Integer;
       Procedure SetRGB(aIndex, aValue: Integer);
     public
-      property id:                       Integer         Read Fid      Write Fid;
-      property Name:                     string          Read FName    Write FName;
-      property BaseRGB[aIndex: Integer]: Integer         Read GetRGB   Write SetRGB; 
-      property Cloth:                    TGW2ColorDetail Read FCloth   Write FCloth;
-      property Leather:                  TGW2ColorDetail Read FLeather Write FLeather;
-      property Metal:                    TGW2ColorDetail Read FMetal   Write FMetal;
+      property id:                       Integer         Read fId      Write fId;
+      property Name:                     string          Read fName    Write fName;
+      property BaseRGB[aIndex: Integer]: Integer         Read GetRGB   Write SetRGB;
+      property Cloth:                    TGW2ColorDetail Read fCloth   Write fCloth;
+      property Leather:                  TGW2ColorDetail Read fLeather Write fLeather;
+      property Metal:                    TGW2ColorDetail Read fMetal   Write fMetal;
   end;
 
 implementation 
@@ -130,26 +130,26 @@ implementation
 { TGW2ColorDetail }
 Function TGW2ColorDetail.GetRGB(aIndex: Integer): Integer;
 begin
-  Result := FRGB[aIndex];
+  Result := fRGB[aIndex];
 end;
 
 
 Procedure TGW2ColorDetail.SetRGB(aIndex, aValue: Integer);
 begin
-  FRGB[aIndex] := aValue;
+  fRGB[aIndex] := aValue;
 end;
 
  
 { TGW2Color }
 Function TGW2Color.GetRGB(aIndex: Integer): Integer;
 begin
-  Result := FBaseRGB[aIndex];
+  Result := fBaseRGB[aIndex];
 end;
 
 
 Procedure TGW2Color.SetRGB(aIndex, aValue: Integer);
 begin
-  FBaseRGB[aIndex] := aValue;
+  fBaseRGB[aIndex] := aValue;
 end;
 
 end.

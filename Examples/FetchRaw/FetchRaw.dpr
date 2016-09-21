@@ -25,14 +25,14 @@ begin
   try
     WriteLn('GW2 Delphi API Version: ' + CONST_VERSION);
     // Create the API object
-    FGW2API := TGW2API.Create;
+    fGW2API := TGW2API.Create;
 
     // Create some space
     WriteLn(sLineBreak);
     // Build the request URL string
     fAPIRequestUrl := CONST_API_URL_BASE + CONST_API_Versions[APIv1];
     // Fetch the server's answer for API v1
-    fAPIReply := FGW2API.WebHandler.FetchRawEndpoint(FAPIRequestUrl);
+    fAPIReply := fGW2API.WebHandler.FetchRawEndpoint(fAPIRequestUrl);
     WriteLn('Raw endpoint response API v1:' + sLineBreak + fAPIReply);
 
     // Create some space
@@ -40,10 +40,10 @@ begin
     // Build the request URL string again
     fAPIRequestUrl := CONST_API_URL_BASE + CONST_API_Versions[APIv2];
     // Fetch the server's answer for API v2
-    fAPIReply := FGW2API.WebHandler.FetchRawEndpoint(FAPIRequestUrl);
+    fAPIReply := fGW2API.WebHandler.FetchRawEndpoint(fAPIRequestUrl);
     WriteLn('Raw endpoint response API v2:' + sLineBreak + fAPIReply);
     // Free the object and clean up
-    FreeAndNil(FGW2API);
+    FreeAndNil(fGW2API);
     WriteLn('Press the Enter key to continue...');
     ReadLn;
   except
