@@ -49,7 +49,9 @@ type
   );
 
 
-  TRGBArray = array [0..2] of Integer;
+  TRGBArray     = array [0..2] of Integer;
+  TStringArray  = array of string;
+  TIntegerArray = array of Integer;
 
   TErrorMessage = record
     HadError: Boolean;
@@ -108,22 +110,28 @@ type
 
   TGW2Color = class
     private
-      fId:      Integer;
-      fName:    string;
-      fBaseRGB: TRGBArray;
-      fCloth:   TGW2ColorDetail;
-      fLeather: TGW2ColorDetail;
-      fMetal:   TGW2ColorDetail;
+      fId:         Integer;
+      fName:       string;
+      fBase_RGB:   TRGBArray;
+      fCloth:      TGW2ColorDetail;
+      fLeather:    TGW2ColorDetail;
+      fMetal:      TGW2ColorDetail;
+      fItem:       Integer;
+      fCategories: TStringArray;
       Function GetRGB(aIndex: Integer): Integer;
       Procedure SetRGB(aIndex, aValue: Integer);
     public
-      property id:                       Integer         Read fId      Write fId;
-      property Name:                     string          Read fName    Write fName;
-      property BaseRGB[aIndex: Integer]: Integer         Read GetRGB   Write SetRGB;
-      property Cloth:                    TGW2ColorDetail Read fCloth   Write fCloth;
-      property Leather:                  TGW2ColorDetail Read fLeather Write fLeather;
-      property Metal:                    TGW2ColorDetail Read fMetal   Write fMetal;
+      property id:                        Integer         Read fId         Write fId;
+      property Name:                      string          Read fName       Write fName;
+      property Base_RGB[aIndex: Integer]: Integer         Read GetRGB      Write SetRGB;
+      property Cloth:                     TGW2ColorDetail Read fCloth      Write fCloth;
+      property Leather:                   TGW2ColorDetail Read fLeather    Write fLeather;
+      property Metal:                     TGW2ColorDetail Read fMetal      Write fMetal;
+      property Item:                      Integer         Read fItem       Write fItem;
+      property Categories:                TStringArray    Read fCategories Write fCategories;
   end;
+
+  TGW2ColorList = array of TGW2Color;
 
 implementation 
 
@@ -143,13 +151,13 @@ end;
 { TGW2Color }
 Function TGW2Color.GetRGB(aIndex: Integer): Integer;
 begin
-  Result := fBaseRGB[aIndex];
+  Result := fBase_RGB[aIndex];
 end;
 
 
 Procedure TGW2Color.SetRGB(aIndex, aValue: Integer);
 begin
-  fBaseRGB[aIndex] := aValue;
+  fBase_RGB[aIndex] := aValue;
 end;
 
 end.

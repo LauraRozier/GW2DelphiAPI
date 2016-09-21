@@ -1,12 +1,14 @@
 # GW2DelphiAPI
 Delphi (Object Pascal) wrapper for the GuildWars2 public API v1 and v2
 
+This wrapper is WIP, all help is welcome! :-)
+
 | Feature                                   | Supported | Planned |
 | :------                                   | :------:  | :------: |
 | `render.guildwars2.com`                   |           | ❓️       |
 | `MumbleLink`                              |           | ❓️       |
 | `/v1/build.json`                          | ✔         |         |
-| `/v1/colors.json`                         |           | ✔       |
+| `/v1/colors.json`                         | ❌         |         |
 | `/v1/continents.json`                     |           | ✔       |
 | `/v1/event_details.json`                  |           | ✔       |
 | `/v1/event_names.json`                    |           | ❓️       |
@@ -62,7 +64,7 @@ Delphi (Object Pascal) wrapper for the GuildWars2 public API v1 and v2
 | `/v2/characters/:id/recipes`              |           | ✔       |
 | `/v2/characters/:id/specializations`      |           | ✔       |
 | `/v2/characters/:id/training`             |           | ✔       |
-| `/v2/colors`                              |           | ✔       |
+| `/v2/colors`                              | ✔         |         |
 | `/v2/commerce/exchange`                   |           | ✔       |
 | `/v2/commerce/listings`                   |           | ✔       |
 | `/v2/commerce/prices`                     |           | ✔       |
@@ -104,7 +106,7 @@ Delphi (Object Pascal) wrapper for the GuildWars2 public API v1 and v2
 | `/v2/pvp/standings`                       |           | ✔       |
 | `/v2/pvp/stats`                           |           | ✔       |
 | `/v2/quaggans`                            |           | ✔       |
-| `/v2/recipes`                             |           | ✔       |
+| `/v2/recipes`                             | WIP       |         |
 | `/v2/recipes/search`                      |           | ✔       |
 | `/v2/skills`                              |           | ✔       |
 | `/v2/skins`                               |           | ✔       |
