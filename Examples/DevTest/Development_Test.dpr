@@ -19,7 +19,6 @@ uses
 var
   fGW2API:        TGW2API;
   fAPIRequestUrl: string;
-  fRequestParams: TUrlParams;
   fVersion:       TGW2Version;
   fStringList:    TStringList;
   fTmpString:     string;
@@ -39,8 +38,10 @@ begin
     WriteLn;
     WriteLn;
     fVersion := TGW2Version.Create;
-    fGW2API.Misc.GetBuild(fGW2API.WebHandler, fVersion);
-    WriteLn('Build: ' + IntToStr(fVersion.id));
+    fGW2API.Misc.GetBuild(fGW2API.WebHandler, APIv1, fVersion);
+    WriteLn('Build API v1: ' + IntToStr(fVersion.id));
+    fGW2API.Misc.GetBuild(fGW2API.WebHandler, APIv2, fVersion);
+    WriteLn('Build API v2: ' + IntToStr(fVersion.id));
     FreeAndNil(fVersion);
 
     WriteLn;

@@ -5,7 +5,7 @@ Delphi (Object Pascal) wrapper for the GuildWars2 public API v1 and v2
 | :------                                   | :------:  | :------: |
 | `render.guildwars2.com`                   |           | ❓️       |
 | `MumbleLink`                              |           | ❓️       |
-| `/v1/build.json`                          |           | ✔       |
+| `/v1/build.json`                          | ✔         |         |
 | `/v1/colors.json`                         |           | ✔       |
 | `/v1/continents.json`                     |           | ✔       |
 | `/v1/event_details.json`                  |           | ✔       |

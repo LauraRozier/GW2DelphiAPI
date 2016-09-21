@@ -138,8 +138,8 @@ function TWebHandler.FetchEndpoint(aVersion:  TAPIVersion;
                                    aFunction: TAPIFunction;
                                    aParams:   TUrlParams): string;
 var
-  Url, ResponseMsg: string;
-  Response:         TErrorMessage;
+  Url:      string;
+  Response: TErrorMessage;
 begin
   Url := CONST_API_URL_BASE + CONST_API_Versions[aVersion] + '/' + CONST_API_Functions[aFunction];
 

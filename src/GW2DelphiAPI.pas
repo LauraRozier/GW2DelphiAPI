@@ -24,7 +24,7 @@ type
     Public
       Misc: TGW2APIMisc;
       constructor Create(aTimeoutSeconds: Integer = 15);
-      destructor Destroy;
+      destructor Destroy; Override;
       procedure SetTimeout(aSeconds: SmallInt);
       function Authenticate(aAuthString: string): string;
       Property State:      TStateHoler Read fStateHolder;
