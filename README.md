@@ -3,6 +3,18 @@ Delphi (Object Pascal) wrapper for the GuildWars2 public API v1 and v2
 
 This wrapper is WIP, all help is welcome! :-)
 
+Already implemented:
+* Fetching raw endpoint info
+* Fetching open API endpoint info
+* Fetching authenticated API endpoint info
+* Everything with a checkmark under 'Supported'
+
+Required functionality:
+* Error handeling
+* Permission strings to enums and back
+
+Feature list:
+
 | Feature                                   | Supported | Planned |
 | :------                                   | :------:  | :------: |
 | `render.guildwars2.com`                   |           | ❓️       |
@@ -114,7 +126,7 @@ This wrapper is WIP, all help is welcome! :-)
 | `/v2/stories`                             |           | ✔       |
 | `/v2/stories/seasons`                     |           | ✔       |
 | `/v2/titles`                              |           | ✔       |
-| `/v2/tokeninfo`                           |           | ✔       |
+| `/v2/tokeninfo`                           | ✔         |         |
 | `/v2/traits`                              |           | ✔       |
 | `/v2/worlds`                              |           | ✔       |
 | `/v2/wvw/abilities`                       |           | ✔       |
