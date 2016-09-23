@@ -21,7 +21,11 @@ type
       function FetchEndpoint(aVersion:  TAPIVersion;
                              aFunction: TAPIFunction;
                              aParams:   TUrlParams): string;
-      function FetchAuthEndpoint(aUrl: string): string;
+      function FetchAuthEndpoint(aVersion:     TAPIVersion;
+                                 aFunction:    TAPIFunction;
+                                 aParams:      TUrlParams;
+                                 aAuthString:  string
+                                 {aPermissions: TAPIPermissions}): string;
       Property HTTPClient: TIdHTTP Read fHTTPClient Write fHTTPClient;
   end;
 
@@ -155,10 +159,21 @@ begin
 end;
 
 
-function TWebHandler.FetchAuthEndpoint(aUrl: string): string;
+function TWebHandler.FetchAuthEndpoint(aVersion:     TAPIVersion;
+                                       aFunction:    TAPIFunction;
+                                       aParams:      TUrlParams;
+                                       aAuthString:  string
+                                       {aPermissions: TAPIPermissions}): string;
 begin
-  //TODO 2 -oThimo -cWeb: Add code to fetch data from the endpoint with authentication
-  Result := SendRequest(aUrl).Msg;
+  //TODO 2 -oThimo -cWeb: Add code to determine if API key has the correct permissions
+  if aAuthString = '' then
+    raise Exception.Create('This API function requires authentication.');
+
+  SetLength(aParams, Length(aParams) + 1);
+  aParams[Length(aParams) - 1].Name  := 'access_token';
+  aParams[Length(aParams) - 1].Value := aAuthString;
+
+  Result := FetchEndpoint(aVersion, aFunction, aParams);
 end;
 
 end.

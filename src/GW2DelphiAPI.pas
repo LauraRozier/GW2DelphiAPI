@@ -7,14 +7,14 @@ uses
   // Indy units
   IdHTTP, IdException, IdExceptionCore, IdStack,
   // GW2 Delphi API Units
-  GW2DA_Defaults, GW2DA_WebHandlers, GW2DA_Misc;
+  GW2DA_Types, GW2DA_Defaults, GW2DA_WebHandlers, GW2DA_Authentication, GW2DA_Misc;
 
 type
   TStateHoler = record
     HTTPTimeout: Integer;
     HTTPClient:  TIdHTTP;
     AuthString:  string;
-    AuthFlags:   Cardinal;
+    AuthToken:   TGW2Token;
   end;
 
   TGW2API = class(TObject)
@@ -68,17 +68,28 @@ end;
 
 
 function TGW2API.Authenticate(aAuthString: string): string;
+var
+  AuthToken: TGW2Token;
+  StrValue:  string;
 begin
-  if not TRegEx.IsMatch(aAuthString, '^(?:[A-F\d]{4,20}-?){8,}$')  then
+  if not TRegEx.IsMatch(aAuthString, '^(?:[A-F\d]{4,20}-?){8,}$') then
   begin
     Result := 'The provided API key does not match the expected format.';
     Exit;
   end;
 
   fStateHolder.AuthString := aAuthString;
-  fStateHolder.AuthFlags  := 0;
+  fStateHolder.AuthToken  := nil;
 
-  //TODO 2 -oThimo -cMain: Add code to authenticate this session
+  AuthToken := GW2TokenInfo(fWebHandler, aAuthString);
+
+  for StrValue in AuthToken.Permissions do
+    if Result = '' then
+      Result := 'Permissions granted to this API key: ' + StrValue
+    else
+      Result := Result + ', ' + StrValue;
+
+  fStateHolder.AuthToken := AuthToken;
 end;
 
 end.

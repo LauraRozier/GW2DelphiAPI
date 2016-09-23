@@ -43,6 +43,24 @@ begin
 
     WriteLn;
     WriteLn;
+    WriteLn('Authentication:');
+    fTmpString := fGW2API.Authenticate(CONST_DEV_API_KEY);
+    WriteLn(fTmpString);
+    fTmpString := '';
+    WriteLn;
+    WriteLn('ID: '   + fGW2API.State.AuthToken.Id);
+    WriteLn('Name: ' + fGW2API.State.AuthToken.Name);
+
+    for fString in fGW2API.State.AuthToken.Permissions do
+      if fTmpString = '' then
+        fTmpString := fString
+      else
+        fTmpString := fTmpString + ', ' + fString;
+
+    WriteLn('Permissions: ' + fTmpString);
+
+    WriteLn;
+    WriteLn;
     WriteLn('Quaggans:');
     fStringList := TStringList.Create;
     fGW2API.Misc.GetQuagganIDs(fGW2API.WebHandler, fStringList);

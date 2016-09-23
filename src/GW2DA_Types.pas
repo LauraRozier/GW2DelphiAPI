@@ -64,6 +64,17 @@ type
 
   TUrlParams = array of TUrlParam;
 
+  TGW2Token = class
+    private
+      fId:          string;
+      fName:        string;
+	    fPermissions: TStringArray;
+    public
+      property Id:          string       Read fId          Write fId;
+      property Name:        string       Read fName        Write fName;
+      property Permissions: TStringArray Read fPermissions Write fPermissions;
+  end;
+
   TGW2Version = class
     private
       fId: Integer;

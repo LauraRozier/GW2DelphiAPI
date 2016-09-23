@@ -48,12 +48,6 @@ begin
       aVersion.id := JSObject.GetValue<Integer>('id'); // Works
     end;
   end;
-
-  // Both of these fail... They return 0
-  // FetchEndpoint returns the raw JSON string, eg: {"id":66577}
-  //
-  // aVersion := TJson.JsonToObject<TGW2Version>(IResult);
-  // aVersion := TJson.JsonToObject<TGW2Version>(IJSONObject);
 end;
 
 
