@@ -9,6 +9,9 @@
         <Projects Include="Examples\FetchRaw\FetchRaw.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Examples\GetColors\GetColors.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="FetchRaw:Make">
         <MSBuild Projects="Examples\FetchRaw\FetchRaw.dproj" Targets="Make"/>
     </Target>
+    <Target Name="GetColors">
+        <MSBuild Projects="Examples\GetColors\GetColors.dproj"/>
+    </Target>
+    <Target Name="GetColors:Clean">
+        <MSBuild Projects="Examples\GetColors\GetColors.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GetColors:Make">
+        <MSBuild Projects="Examples\GetColors\GetColors.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Development_Test;FetchRaw"/>
+        <CallTarget Targets="Development_Test;FetchRaw;GetColors"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Development_Test:Clean;FetchRaw:Clean"/>
+        <CallTarget Targets="Development_Test:Clean;FetchRaw:Clean;GetColors:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Development_Test:Make;FetchRaw:Make"/>
+        <CallTarget Targets="Development_Test:Make;FetchRaw:Make;GetColors:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
