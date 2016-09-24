@@ -5,16 +5,8 @@ program FetchRaw;
 {$R *.res}
 
 uses
-  // System units
   SysUtils,
-  // GW2 Delphi API Units
-  GW2DA_Defaults in '..\..\src\GW2DA_Defaults.pas',
-  GW2DA_Types in '..\..\src\GW2DA_Types.pas',
-  GW2DA_Utils in '..\..\src\GW2DA_Utils.pas',
-  GW2DelphiAPI in '..\..\src\GW2DelphiAPI.pas',
-  GW2DA_Authentication in '..\..\src\Networking\GW2DA_Authentication.pas',
-  GW2DA_WebHandlers in '..\..\src\Networking\GW2DA_WebHandlers.pas',
-  GW2DA_Misc in '..\..\src\Misc\GW2DA_Misc.pas';
+  GW2DelphiAPI in '..\..\src\GW2DelphiAPI.pas';
 
 var
   fGW2API:        TGW2API;
