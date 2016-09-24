@@ -180,25 +180,40 @@ end;
 
 
 { Utilities }
-{
-class function TEnumHlpr<TEnum>.EnumFromString(const str: string): TEnum;
+class function TGW2Helper.StringToEnum<TEnum>(const aString: string): TEnum;
 var
-  typeInf: PTypeInfo;
+  TypeInf: PTypeInfo;
+  Value:   Integer;
+  PValue:  Pointer;
 begin
   typeInf := PTypeInfo(TypeInfo(TEnum));
     if typeInf^.Kind <> tkEnumeration then
       raise EInvalidCast.CreateRes(@SInvalidCast);
 
-  for Result := low(Result) to high(Result) do // Fails here, needs work
-    if TEnum[Result] = str then
-      exit;
+  Value  := GetEnumValue(TypeInfo(TEnum), aString);
 
-  raise Exception.CreateFmt('Enum %s not found', [str]);
+  if Value = -1 then
+    raise Exception.CreateFmt('Enum %s not found', [aString]);
+
+  PValue := @Value;
+  Result := TEnum(PValue^);
 end;
-}
 
 
-function GW2TokenInfo(aWebHandler: TWebHandler; aAuthStr: string): TGW2Token;
+class function TGW2Helper.EnumToInt<TEnum>(const EnumValue: TEnum): Integer;
+begin
+  Result := 0;
+  Move(EnumValue, Result, sizeOf(EnumValue));
+end;
+
+
+class function TGW2Helper.EnumToString<TEnum>(EnumValue: TEnum): string;
+begin
+  Result := GetEnumName(TypeInfo(TEnum), EnumToInt(EnumValue));
+end;
+
+
+function TGW2Helper.GW2TokenInfo(aWebHandler: TWebHandler; aAuthStr: string): TGW2Token;
 var
   Reply:     string;
   JSObject:  TJSONObject;
@@ -218,8 +233,7 @@ begin
 end;
 
 
-procedure TGW2APIMisc.GetBuild(aWebHandler: TWebHandler; aAPIVersion: TAPIVersion;
-                               aVersion: TGW2Version);
+function TGW2APIMisc.GetBuild(aWebHandler: TWebHandler; aAPIVersion: TAPIVersion): TGW2Version;
 var
   Reply:   string;
   JSObject: TJSONObject;
@@ -229,15 +243,15 @@ begin
       raise Exception.Create('Unsupported API version.');
     APIv1:
     begin
-      Reply       := aWebHandler.FetchEndpoint(APIv1, v1Build, nil);
-      JSObject    := TJSONObject.ParseJSONValue(Reply) as TJSONObject;
-      aVersion.id := JSObject.GetValue<Integer>('build_id'); // Works
+      Reply     := aWebHandler.FetchEndpoint(APIv1, v1Build, nil);
+      JSObject  := TJSONObject.ParseJSONValue(Reply) as TJSONObject;
+      Result.id := JSObject.GetValue<Integer>('build_id');
     end;
     APIv2:
     begin
-      Reply       := aWebHandler.FetchEndpoint(APIv2, v2Build, nil);
-      JSObject    := TJSONObject.ParseJSONValue(Reply) as TJSONObject;
-      aVersion.id := JSObject.GetValue<Integer>('id'); // Works
+      Reply     := aWebHandler.FetchEndpoint(APIv2, v2Build, nil);
+      JSObject  := TJSONObject.ParseJSONValue(Reply) as TJSONObject;
+      Result.id := JSObject.GetValue<Integer>('id');
     end;
   end;
 end;
@@ -312,7 +326,8 @@ begin
   SetTimeout(aTimeoutSeconds);
   fWebHandler            := TWebHandler.Create;
   fWebHandler.HTTPClient := fStateHolder.HTTPClient;
-  Misc                   := TGW2APIMisc.Create;
+  fUtils                 := TGW2Helper.Create;
+  fMisc                  := TGW2APIMisc.Create;
 end;
 
 
@@ -321,6 +336,8 @@ begin
   fStateHolder.HTTPClient.Disconnect;
   FreeAndNil(fWebHandler);
   FreeAndNil(fStateHolder.HTTPClient);
+  FreeAndNil(fUtils);
+  FreeAndNil(fMisc);
 end;
 
 
@@ -346,7 +363,7 @@ begin
   fStateHolder.AuthString := aAuthString;
   fStateHolder.AuthToken  := nil;
 
-  AuthToken := GW2TokenInfo(fWebHandler, aAuthString);
+  AuthToken := fUtils.GW2TokenInfo(fWebHandler, aAuthString);
 
   for StrValue in AuthToken.Permissions do
     if Result = '' then

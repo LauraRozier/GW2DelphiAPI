@@ -5,16 +5,9 @@ program Development_Test;
 {$R *.res}
 
 uses
-  // System units
-  SysUtils, Classes,
-  // GW2 Delphi API Units
-  GW2DelphiAPI in '..\..\src\GW2DelphiAPI.pas',
-  GW2DA_Defaults in '..\..\src\GW2DA_Defaults.pas',
-  GW2DA_Types in '..\..\src\GW2DA_Types.pas',
-  GW2DA_Authentication in '..\..\src\Networking\GW2DA_Authentication.pas',
-  GW2DA_WebHandlers in '..\..\src\Networking\GW2DA_WebHandlers.pas',
-  GW2DA_Misc in '..\..\src\Misc\GW2DA_Misc.pas',
-  GW2DA_Utils in '..\..\src\GW2DA_Utils.pas';
+  SysUtils,
+  Classes,
+  GW2DelphiAPI in '..\..\src\GW2DelphiAPI.pas';
 
 CONST
   { These keys only exist for development purposes and will be deleted ASAP! }
@@ -27,7 +20,7 @@ var
   fStringList:    TStringList;
   fTmpString:     string;
   fString:        string;
-  fParams:        TUrlParams;
+//  fParams:        TUrlParams;
 
 begin
   try
@@ -35,11 +28,17 @@ begin
     fGW2API := TGW2API.Create();
 
     fAPIRequestUrl := CONST_API_URL_BASE + CONST_API_Versions[APIv1];
-    WriteLn(fGW2API.WebHandler.FetchRawEndpoint(fAPIRequestUrl));
+    WriteLn('Using API version: ' +
+            fGW2API.Utils.EnumToString(
+              fGW2API.Utils.StringToEnum<TAPIVersion>('APIv1')
+            ) + sLineBreak +
+            fGW2API.WebHandler.FetchRawEndpoint(fAPIRequestUrl));
     WriteLn;
     WriteLn;
     fAPIRequestUrl := CONST_API_URL_BASE + CONST_API_Versions[APIv2];
-    WriteLn(fGW2API.WebHandler.FetchRawEndpoint(fAPIRequestUrl));
+    WriteLn('Using API version: ' +
+            IntToStr(fGW2API.Utils.EnumToInt(APIv2)) + sLineBreak +
+            fGW2API.WebHandler.FetchRawEndpoint(fAPIRequestUrl));
 
     WriteLn;
     WriteLn;
