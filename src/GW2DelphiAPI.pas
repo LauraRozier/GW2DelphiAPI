@@ -469,6 +469,47 @@ begin
 end;
 
 
+//* Version: 30
+//* aWebHandler: The API webhandler object
+//* Result: Returns an array of Mini IDs
+function TGW2APIMisc.GetMiniIDs(aWebHandler: TWebHandler): TIntegerArray;
+var
+  Reply:   string;
+  JSArr:   TJSONArray;
+  I:       Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Minis, nil);
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+    Result[I] := StrToInt(JSArr.Items[I].Value)
+end;
+
+
+//* Version: 30
+//* aWebHandler: The API webhandler object
+//* aParams: The parameters (ids and lang)
+//* Result: Returns an array of Mini objects
+function TGW2APIMisc.GetMinis(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2MiniArray;
+var
+  Reply:        string;
+  JSArr:        TJSONArray;
+  JSObject:     TJSONObject;
+  I:            Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Minis, aParams);
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+  begin
+    JSObject  := JSArr.Items[I] as TJSONObject;
+    Result[I] := TJson.JsonToObject<TGW2Mini>(JSObject);
+  end;
+end;
+
+
 { Main API class }
 //TODO 1 -oThimo -cMain: Add functions/procedures for the API
 constructor TGW2API.Create(aTimeoutSeconds: Integer = 15);

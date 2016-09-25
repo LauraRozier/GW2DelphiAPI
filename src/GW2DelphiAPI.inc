@@ -235,7 +235,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0029';
+  CONST_VERSION_REVISION = 'r0030';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -328,6 +328,8 @@ type
       function GetCurrencies(aWebHandler:  TWebHandler; aParams: TUrlParams): TGW2CurrencyArray;
       function GetFileIDs(aWebHandler:     TWebHandler):                      TStringArray;
       function GetFiles(aWebHandler:       TWebHandler; aParams: TUrlParams): TGW2FileArray;
+      function GetMiniIDs(aWebHandler:     TWebHandler):                      TIntegerArray;
+      function GetMinis(aWebHandler:       TWebHandler; aParams: TUrlParams): TGW2MiniArray;
   end;
 
 { Main API class }
