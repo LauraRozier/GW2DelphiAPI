@@ -135,6 +135,7 @@ end;
 
 
 //* Version: 9
+//* Class: WebHandler
 //* Retrieve the raw reply of a specific URL
 //* aUrl: The complete URL that you wish to call
 //* Result: Returns the full reply in plain-text
@@ -145,6 +146,7 @@ end;
 
 
 //* Version: 9
+//* Class: WebHandler
 //* Retrieve the raw reply of a specific API version and function with parameters
 //* aVersion: The API version enum value
 //* aFunction: The API function enum value
@@ -170,6 +172,7 @@ end;
 
 
 //* Version: 15
+//* Class: WebHandler
 //* Retrieve the raw reply of a specific API version and function with parameters and authentication
 //* aVersion: The API version enum value
 //* aFunction: The API function enum value
@@ -191,6 +194,7 @@ end;
 
 { Utilities }
 //* Version: 21
+//* Class: Utils
 //* aString: Enum value name
 //* Result: Returns the enum value from a string
 function TGW2Helper.StringToEnum<TEnum>(const aString: string): TEnum;
@@ -214,6 +218,7 @@ end;
 
 
 //* Version: 21
+//* Class: Utils
 //* aEnumValue: Enum value
 //* Result: Returns the value of an enum value as a Integer
 function TGW2Helper.EnumToInt<TEnum>(const aEnumValue: TEnum): Integer;
@@ -224,6 +229,7 @@ end;
 
 
 //* Version: 21
+//* Class: Utils
 //* aEnumValue: Enum value
 //* Result: Returns the name of an enum value as a string
 function TGW2Helper.EnumToString<TEnum>(const aEnumValue: TEnum): string;
@@ -233,6 +239,7 @@ end;
 
 
 //* Version: 21
+//* Class: Utils
 //* aWebHandler: The API webhandler object
 //* aAuthStr: The API auth string
 //* Result: Returns an API security token
@@ -251,6 +258,7 @@ end;
 
 { API Misc functions class }
 //* Version: 9
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* Result: Returns the GW2 build number
 function TGW2APIMisc.GetBuild(aWebHandler: TWebHandler): TGW2Version;
@@ -265,6 +273,7 @@ end;
 
 
 //* Version: 12
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* Result: Returns an array of color IDs
 function TGW2APIMisc.GetColorIDs(aWebHandler: TWebHandler): TIntegerArray;
@@ -283,6 +292,7 @@ end;
 
 
 //* Version: 12
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* aParams: The parameters (ids and lang)
 //* Result: Returns an array of color objects
@@ -306,6 +316,7 @@ end;
 
 
 //* Version: 10
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* Result: Returns an array of Quaggan IDs
 function TGW2APIMisc.GetQuagganIDs(aWebHandler: TWebHandler): TStringArray;
@@ -324,6 +335,7 @@ end;
 
 
 //* Version: 23
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* aParams: The parameters (ids)
 //* Result: Returns an array of Quaggan objects
@@ -347,6 +359,7 @@ end;
 
 
 //* Version: 25
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* Result: Returns an array of world IDs
 function TGW2APIMisc.GetWorldIDs(aWebHandler: TWebHandler): TIntegerArray;
@@ -365,6 +378,7 @@ end;
 
 
 //* Version: 25
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* aParams: The parameters (ids and lang)
 //* Result: Returns an array of world objects
@@ -388,6 +402,7 @@ end;
 
 
 //* Version: 28
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* Result: Returns an array of currency IDs
 function TGW2APIMisc.GetCurrencyIDs(aWebHandler: TWebHandler): TIntegerArray;
@@ -406,6 +421,7 @@ end;
 
 
 //* Version: 28
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* aParams: The parameters (ids and lang)
 //* Result: Returns an array of currency objects
@@ -429,6 +445,7 @@ end;
 
 
 //* Version: 29
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* Result: Returns an array of file IDs
 function TGW2APIMisc.GetFileIDs(aWebHandler: TWebHandler): TStringArray;
@@ -447,6 +464,7 @@ end;
 
 
 //* Version: 29
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* aParams: The parameters (ids)
 //* Result: Returns an array of file objects
@@ -470,6 +488,7 @@ end;
 
 
 //* Version: 30
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* Result: Returns an array of Mini IDs
 function TGW2APIMisc.GetMiniIDs(aWebHandler: TWebHandler): TIntegerArray;
@@ -488,6 +507,7 @@ end;
 
 
 //* Version: 30
+//* Class: Misc
 //* aWebHandler: The API webhandler object
 //* aParams: The parameters (ids and lang)
 //* Result: Returns an array of Mini objects
@@ -541,6 +561,8 @@ end;
 
 
 //* Version: 9
+//* Class: GW2API
+//* Sets the read/write timeout for the websocket
 //* aSeconds: Number of seconds
 procedure TGW2API.SetTimeout(aSeconds: SmallInt);
 begin
@@ -551,6 +573,7 @@ end;
 
 
 //* Version: 9
+//* Class: GW2API
 //* Sets the security token for this API session
 //* aAuthString: The API auth string
 //* Result: Returns an error or string of permissions

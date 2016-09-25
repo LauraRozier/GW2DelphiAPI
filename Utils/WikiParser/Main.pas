@@ -33,12 +33,13 @@ type
   end;
 
   TCommandInfo = record
-    Version: string;
-    Name: string;
+    Version:     string;
+    Group:       string;
+    Name:        string;
     Description: string;
-    Parameters: string;
-    Return: string;
-    ReturnDesc: string;
+    Parameters:  string;
+    Return:      string;
+    ReturnDesc:  string;
   end;
 
 const
@@ -218,6 +219,7 @@ begin
     begin
       // Reset old values
       res.Version     := '';
+      res.Group       := '';
       res.Name        := '';
       res.Description := '';
       res.Parameters  := '';
@@ -227,6 +229,7 @@ begin
       descrTxt.Clear;
 
       //* Version: 1234
+      //* Class: SomeClass
       //* Large description of the method, optional
       //* aX: Small optional description of parameter
       //* aY: Small optional description of parameter
@@ -235,9 +238,17 @@ begin
       // Before anything it should start with "//* Version:"
       if sourceTxt[i].StartsWith('//* Version:') then
       begin
-        restStr := Trim(sourceTxt[i].Substring(sourceTxt[i].IndexOf(':') + 2));
+        restStr     := Trim(sourceTxt[i].Substring(sourceTxt[i].IndexOf(':') + 2));
         res.Version := IfThen(restStr = '', '-', restStr);
         Inc(iPlus);
+
+        if sourceTxt[i+iPlus].StartsWith('//* Class:') then
+        begin
+          restStr   := Trim(sourceTxt[i+iPlus].Substring(sourceTxt[i+iPlus].IndexOf(':') + 2));
+          res.Group := IfThen(restStr = '', '-', restStr);
+          Inc(iPlus);
+        end;
+
 
         // Descriptions are only added by lines starting with "//* "
         if sourceTxt[i+iPlus].StartsWith('//* ') then
@@ -301,7 +312,7 @@ begin
           res.Description := res.Description + ' ' + descrTxt[j];
 
         // Now we have all the parts and can combine them however we like
-        aList.Add('| ' + res.Version + ' | ' + res.Name + '<br><sub>' + res.Description + '</sub>' +
+        aList.Add('| ' + res.Version + ' | ' + res.Group + '.' + res.Name + '<br><sub>' + res.Description + '</sub>' +
                   ' | <sub>' + res.Parameters + '</sub>' +
                   IfThen(aHasReturn, ' | <sub>' + res.Return + IfThen(res.ReturnDesc <> '', ' // ' + res.ReturnDesc) + '</sub>') +
                   ' |');
