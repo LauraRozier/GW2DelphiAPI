@@ -97,8 +97,9 @@ begin
 
     for fWorld in fWorldArr do
     begin
-      WriteLn(#9 + 'ID: '   + IntToStr(fWorld.id));
-      WriteLn(#9 + 'Name: ' + fWorld.Name);
+      WriteLn(#9 + 'ID: '         + IntToStr(fWorld.id));
+      WriteLn(#9 + 'Name: '       + fWorld.Name);
+      WriteLn(#9 + 'Population: ' + fWorld.Population);
       WriteLn;
     end;
 

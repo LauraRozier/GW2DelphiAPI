@@ -159,11 +159,13 @@ type
 
   TGW2World = class
     private
-      fId:   Integer;
-      fName: string;
+      fId:         Integer;
+      fName:       string;
+      fPopulation: string;
     public
-      property id:   Integer Read fId   Write fId;
-      property Name: string  Read fName Write fName;
+      property id:         Integer Read fId         Write fId;
+      property Name:       string  Read fName       Write fName;
+      property Population: string  Read fPopulation Write fPopulation;
   end;
 
   TGW2WorldArray = array of TGW2World;
@@ -200,12 +202,14 @@ type
     private
       fId:      Integer;
       fName:    string;
+      fUnlock:  string;
       fIcon:    string;
       fOrder:   Integer;
       fItem_ID: Integer;
     public
       property id:      Integer Read fId      Write fId;
       property Name:    string  Read fName    Write fName;
+      property Unlock:  string  Read fUnlock  Write fUnlock;
       property Icon:    string  Read fIcon    Write fIcon;
       property Order:   Integer Read fOrder   Write fOrder;
       property Item_ID: Integer Read fItem_ID Write fItem_ID;
