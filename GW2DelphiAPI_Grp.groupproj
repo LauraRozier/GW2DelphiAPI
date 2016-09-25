@@ -15,6 +15,9 @@
         <Projects Include="Examples\GetQuaggans\GetQuaggans.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Utils\WikiParser\WikiParser.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -59,14 +62,23 @@
     <Target Name="GetQuaggans:Make">
         <MSBuild Projects="Examples\GetQuaggans\GetQuaggans.dproj" Targets="Make"/>
     </Target>
+    <Target Name="WikiParser">
+        <MSBuild Projects="Utils\WikiParser\WikiParser.dproj"/>
+    </Target>
+    <Target Name="WikiParser:Clean">
+        <MSBuild Projects="Utils\WikiParser\WikiParser.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WikiParser:Make">
+        <MSBuild Projects="Utils\WikiParser\WikiParser.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Development_Test;FetchRaw;GetColors;GetQuaggans"/>
+        <CallTarget Targets="Development_Test;FetchRaw;GetColors;GetQuaggans;WikiParser"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Development_Test:Clean;FetchRaw:Clean;GetColors:Clean;GetQuaggans:Clean"/>
+        <CallTarget Targets="Development_Test:Clean;FetchRaw:Clean;GetColors:Clean;GetQuaggans:Clean;WikiParser:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Development_Test:Make;FetchRaw:Make;GetColors:Make;GetQuaggans:Make"/>
+        <CallTarget Targets="Development_Test:Make;FetchRaw:Make;GetColors:Make;GetQuaggans:Make;WikiParser:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

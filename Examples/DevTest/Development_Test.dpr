@@ -18,9 +18,13 @@ var
   fGW2API:        TGW2API;
   fAPIRequestUrl: string;
   fStringArr:     TStringArray;
+  fIntegerArr:    TIntegerArray;
   fTmpString:     string;
   fString:        string;
-//  fParams:        TUrlParams;
+  fInteger:       Integer;
+  fParams:        TUrlParams;
+  fWorldArr:      TGW2WorldArray;
+  fWorld:         TGW2World;
 
 begin
   try
@@ -67,11 +71,36 @@ begin
 
     WriteLn;
     WriteLn;
-    WriteLn('Quaggans:');
-    fStringArr := fGW2API.Misc.GetQuagganIDs(fGW2API.WebHandler);
+    WriteLn('World IDs:');
+    fIntegerArr := fGW2API.Misc.GetWorldIDs(fGW2API.WebHandler);
+    fTmpString := '';
 
-    for fTmpString in fStringArr do
-      WriteLn(fTmpString);
+    for fInteger in fIntegerArr do
+      if fTmpString = '' then
+        fTmpString := IntToStr(fInteger)
+      else
+        fTmpString := fTmpString + ', ' + IntToStr(fInteger);
+
+    WriteLn(fTmpString);
+
+    WriteLn;
+    WriteLn;
+    SetLength(fParams, 2);
+    fParams[0].Name  := 'ids';
+    fParams[0].Value := IntToStr(fIntegerArr[0]) + ',' +
+                        IntToStr(fIntegerArr[1]) + ',' +
+                        IntToStr(fIntegerArr[2]);
+    fParams[1].Name  := 'lang';
+    fParams[1].Value := 'en';
+    fWorldArr        := fGW2API.Misc.GetWorlds(fGW2API.WebHandler, fParams);
+    WriteLn('Worlds:');
+
+    for fWorld in fWorldArr do
+    begin
+      WriteLn(#9 + 'ID: '   + IntToStr(fWorld.id));
+      WriteLn(#9 + 'Name: ' + fWorld.Name);
+      WriteLn;
+    end;
 
     FreeAndNil(fGW2API);
   except

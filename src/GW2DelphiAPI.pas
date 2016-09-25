@@ -134,15 +134,23 @@ begin
 end;
 
 
+//* Version: 9
+//* Retrieve the raw reply of a specific URL
+//* aUrl: The complete URL that you wish to call
+//* Result: Returns the full reply in plain-text
 function TWebHandler.FetchRawEndpoint(aUrl: string): string;
 begin
    Result := SendRequest(aUrl).Msg;
 end;
 
 
-function TWebHandler.FetchEndpoint(aVersion:  TAPIVersion;
-                                   aFunction: TAPIFunction;
-                                   aParams:   TUrlParams): string;
+//* Version: 9
+//* Retrieve the raw reply of a specific API version and function with parameters
+//* aVersion: The API version enum value
+//* aFunction: The API function enum value
+//* aParams: An array of parameters, these can be IDs and Language codes
+//* Result: Returns the full reply in plain-text
+function TWebHandler.FetchEndpoint(aVersion: TAPIVersion; aFunction: TAPIFunction; aParams: TUrlParams): string;
 var
   Url:      string;
   Response: TErrorMessage;
@@ -161,13 +169,15 @@ begin
 end;
 
 
-function TWebHandler.FetchAuthEndpoint(aVersion:     TAPIVersion;
-                                       aFunction:    TAPIFunction;
-                                       aParams:      TUrlParams;
-                                       aAuthString:  string
-                                       {aPermissions: TAPIPermissions}): string;
+//* Version: 15
+//* Retrieve the raw reply of a specific API version and function with parameters and authentication
+//* aVersion: The API version enum value
+//* aFunction: The API function enum value
+//* aParams: An array of parameters, these can be IDs and Language codes
+//* aAuthString: Your API auth string
+//* Result: Returns the full reply in plain-text
+function TWebHandler.FetchAuthEndpoint(aVersion: TAPIVersion; aFunction: TAPIFunction; aParams: TUrlParams; aAuthString: string): string;
 begin
-  //TODO 2 -oThimo -cWeb: Add code to determine if API key has the correct permissions
   if aAuthString = '' then
     raise Exception.Create('This API function requires authentication.');
 
@@ -180,7 +190,10 @@ end;
 
 
 { Utilities }
-class function TGW2Helper.StringToEnum<TEnum>(const aString: string): TEnum;
+//* Version: 21
+//* aString: Enum value name
+//* Result: Returns the enum value from a string
+function TGW2Helper.StringToEnum<TEnum>(const aString: string): TEnum;
 var
   TypeInf: PTypeInfo;
   Value:   Integer;
@@ -200,20 +213,30 @@ begin
 end;
 
 
-class function TGW2Helper.EnumToInt<TEnum>(const EnumValue: TEnum): Integer;
+//* Version: 21
+//* aEnumValue: Enum value
+//* Result: Returns the value of an enum value as a Integer
+function TGW2Helper.EnumToInt<TEnum>(const aEnumValue: TEnum): Integer;
 begin
   Result := 0;
-  Move(EnumValue, Result, sizeOf(EnumValue));
+  Move(aEnumValue, Result, sizeOf(aEnumValue));
 end;
 
 
-class function TGW2Helper.EnumToString<TEnum>(EnumValue: TEnum): string;
+//* Version: 21
+//* aEnumValue: Enum value
+//* Result: Returns the name of an enum value as a string
+function TGW2Helper.EnumToString<TEnum>(const aEnumValue: TEnum): string;
 begin
-  Result := GetEnumName(TypeInfo(TEnum), EnumToInt(EnumValue));
+  Result := GetEnumName(TypeInfo(TEnum), EnumToInt(aEnumValue));
 end;
 
 
-function TGW2Helper.GW2TokenInfo(aWebHandler: TWebHandler; aAuthStr: string): TGW2Token;
+//* Version: 21
+//* aWebHandler: The API webhandler object
+//* aAuthStr: The API auth string
+//* Result: Returns an API security token
+function TGW2Helper.GetTokenInfo(aWebHandler: TWebHandler; aAuthStr: string): TGW2Token;
 var
   Reply:     string;
   JSObject:  TJSONObject;
@@ -227,12 +250,9 @@ end;
 
 
 { API Misc functions class }
-constructor TGW2APIMisc.Create;
-begin
-  Inherited Create;
-end;
-
-
+//* Version: 9
+//* aWebHandler: The API webhandler object
+//* Result: Returns the GW2 build number
 function TGW2APIMisc.GetBuild(aWebHandler: TWebHandler): TGW2Version;
 var
   Reply:   string;
@@ -244,6 +264,9 @@ begin
 end;
 
 
+//* Version: 12
+//* aWebHandler: The API webhandler object
+//* Result: Returns an array of color IDs
 function TGW2APIMisc.GetColorIDs(aWebHandler: TWebHandler): TIntegerArray;
 var
   Reply:   string;
@@ -251,7 +274,7 @@ var
   I:       Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Colors, nil);
-  JSArr  := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
   SetLength(Result, JSArr.Count);
 
   for I := 0 to JSArr.Count - 1 do
@@ -259,6 +282,10 @@ begin
 end;
 
 
+//* Version: 12
+//* aWebHandler: The API webhandler object
+//* aParams: The parameters (ids and lang)
+//* Result: Returns an array of color objects
 function TGW2APIMisc.GetColors(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2ColorArray;
 var
   Reply:      string;
@@ -278,6 +305,9 @@ begin
 end;
 
 
+//* Version: 10
+//* aWebHandler: The API webhandler object
+//* Result: Returns an array of Quaggan IDs
 function TGW2APIMisc.GetQuagganIDs(aWebHandler: TWebHandler): TStringArray;
 var
   Reply:   string;
@@ -285,7 +315,7 @@ var
   I:       Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Quaggans, nil);
-  JSArr  := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
   SetLength(Result, JSArr.Count);
 
   for I := 0 to JSArr.Count - 1 do
@@ -293,6 +323,10 @@ begin
 end;
 
 
+//* Version: 23
+//* aWebHandler: The API webhandler object
+//* aParams: The parameters (ids)
+//* Result: Returns an array of Quaggan objects
 function TGW2APIMisc.GetQuaggans(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2QuagganArray;
 var
   Reply:        string;
@@ -308,6 +342,47 @@ begin
   begin
     JSObject  := JSArr.Items[I] as TJSONObject;
     Result[I] := TJson.JsonToObject<TGW2Quaggan>(JSObject);
+  end;
+end;
+
+
+//* Version: 25
+//* aWebHandler: The API webhandler object
+//* Result: Returns an array of world IDs
+function TGW2APIMisc.GetWorldIDs(aWebHandler: TWebHandler): TIntegerArray;
+var
+  Reply:   string;
+  JSArr:   TJSONArray;
+  I:       Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Worlds, nil);
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+    Result[I] := StrToInt(JSArr.Items[I].Value)
+end;
+
+
+//* Version: 25
+//* aWebHandler: The API webhandler object
+//* aParams: The parameters (ids and lang)
+//* Result: Returns an array of world objects
+function TGW2APIMisc.GetWorlds(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2WorldArray;
+var
+  Reply:        string;
+  JSArr:        TJSONArray;
+  JSObject:     TJSONObject;
+  I:            Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Worlds, aParams);
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+  begin
+    JSObject  := JSArr.Items[I] as TJSONObject;
+    Result[I] := TJson.JsonToObject<TGW2World>(JSObject);
   end;
 end;
 
@@ -342,6 +417,8 @@ begin
 end;
 
 
+//* Version: 9
+//* aSeconds: Number of seconds
 procedure TGW2API.SetTimeout(aSeconds: SmallInt);
 begin
   fStateHolder.HTTPTimeout               := aSeconds * CONST_ONE_SECOND;
@@ -350,6 +427,10 @@ begin
 end;
 
 
+//* Version: 9
+//* Sets the security token for this API session
+//* aAuthString: The API auth string
+//* Result: Returns an error or string of permissions
 function TGW2API.Authenticate(aAuthString: string): string;
 var
   AuthToken: TGW2Token;
@@ -364,7 +445,7 @@ begin
   fStateHolder.AuthString := aAuthString;
   fStateHolder.AuthToken  := nil;
 
-  AuthToken := fUtils.GW2TokenInfo(fWebHandler, aAuthString);
+  AuthToken := fUtils.GetTokenInfo(fWebHandler, aAuthString);
 
   for StrValue in AuthToken.Permissions do
     if Result = '' then
