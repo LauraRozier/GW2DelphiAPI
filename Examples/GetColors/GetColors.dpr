@@ -9,11 +9,11 @@ uses
   GW2DelphiAPI in '..\..\src\GW2DelphiAPI.pas';
 
 var
-  fGW2API:              TGW2API;       // Main API class object
-  fParams:              TUrlParams;    // Array of parameter objects
-  fColorIDs:            TIntegerArray; // Array of Integers
-  fColorList:           TGW2ColorList; // Array of color class objects
-  fColor:               TGW2Color;     // Single color class object
+  fGW2API:              TGW2API;        // Main API class object
+  fParams:              TUrlParams;     // Array of parameter objects
+  fColorIDs:            TIntegerArray;  // Array of Integers
+  fColorArray:          TGW2ColorArray; // Array of color class objects
+  fColor:               TGW2Color;      // Single color class object
   fStrValue, fBuildStr: string;
   fIntValue:            Integer;
 
@@ -41,9 +41,9 @@ begin
     SetLength(fParams, 1);
     fParams[0].Name  := 'ids';
     fParams[0].Value := '1,2,3';
-    fColorList       := fGW2API.Misc.GetColors(fGW2API.WebHandler, fParams);
+    fColorArray      := fGW2API.Misc.GetColors(fGW2API.WebHandler, fParams);
 
-    for fColor in fColorList do
+    for fColor in fColorArray do
     begin
       WriteLn(#9 + 'ID: ' + IntToStr(fColor.id));
       WriteLn(#9 + 'Name: ' + fColor.Name);
@@ -91,11 +91,11 @@ begin
     end;
 
     FreeAndNil(fGW2API);
-
-    WriteLn('Press the Enter key to continue...');
-    ReadLn;
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
   end;
+
+  WriteLn('Press the Enter key to continue...');
+  ReadLn;
 end.

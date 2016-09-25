@@ -34,12 +34,13 @@ begin
     // Fetch the server's answer for API v2
     fAPIReply := fGW2API.WebHandler.FetchRawEndpoint(fAPIRequestUrl);
     WriteLn('Raw endpoint response API v2:' + sLineBreak + fAPIReply);
-    // Free the object and clean up
+
     FreeAndNil(fGW2API);
-    WriteLn('Press the Enter key to continue...');
-    ReadLn;
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
   end;
+
+  WriteLn('Press the Enter key to continue...');
+  ReadLn;
 end.
