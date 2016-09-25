@@ -79,7 +79,7 @@ type
       property Permissions: TStringArray Read fPermissions Write fPermissions;
   end;
 
-  // Versions
+  // Misc
   TGW2Version = class
     private
       fId: Integer;
@@ -87,7 +87,6 @@ type
       Property id: Integer Read fId Write fId;
   end;
 
-  // Colors
   TGW2ColorDetail = class
     private
       fBrightness: Integer;
@@ -130,9 +129,8 @@ type
       property Categories:                TStringArray    Read fCategories Write fCategories;
   end;
 
-  TGW2ColorList = array of TGW2Color;
+  TGW2ColorArray = array of TGW2Color;
 
-  // Quaggans
   TGW2Quaggan = class
     private
       fId:  string;
@@ -142,7 +140,8 @@ type
       property url: string Read fUrl Write fUrl;
   end;
 
-  // Worlds
+  TGW2QuagganArray = array of TGW2Quaggan;
+
   TGW2World = class
     private
       fId:   Integer;
@@ -150,6 +149,45 @@ type
     public
       property id:   Integer Read fId   Write fId;
       property Name: string  Read fName Write fName;
+  end;
+
+  TGW2Currency = class
+    private
+      fId:          Integer;
+      fName:        string;
+      fDescription: string;
+      fIcon:        string;
+      fOrder:       Integer;
+    public
+      property id:          Integer Read fId          Write fId;
+      property Name:        string  Read fName        Write fName;
+      property Description: string  Read fDescription Write fDescription;
+      property Icon:        string  Read fIcon        Write fIcon;
+      property Order:       Integer Read fOrder       Write fOrder;
+  end;
+
+  TGW2File = class
+    private
+      fId:   string;
+      fIcon: string;
+    public
+      property id:   string Read fId   Write fId;
+      property Icon: string Read fIcon Write fIcon;
+  end;
+
+  TGW2Mini = class
+    private
+      fId:      Integer;
+      fName:    string;
+      fIcon:    string;
+      fOrder:   Integer;
+      fItem_ID: Integer;
+    public
+      property id:      Integer Read fId      Write fId;
+      property Name:    string  Read fName    Write fName;
+      property Icon:    string  Read fIcon    Write fIcon;
+      property Order:   Integer Read fOrder   Write fOrder;
+      property Item_ID: Integer Read fItem_ID Write fItem_ID;
   end;
 
   // States
@@ -170,7 +208,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0021';
+  CONST_VERSION_REVISION = 'r0023';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -260,10 +298,11 @@ type
   TGW2APIMisc = class(TObject)
     public
       constructor Create;
-      function GetBuild(aWebHandler: TWebHandler; aAPIVersion: TAPIVersion): TGW2Version;
+      function GetBuild(aWebHandler: TWebHandler): TGW2Version;
       function GetColorIDs(aWebHandler: TWebHandler): TIntegerArray;
-      function GetColors(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2ColorList;
-      procedure GetQuagganIDs(aWebHandler: TWebHandler; aStringList: TStringList);
+      function GetColors(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2ColorArray;
+      function GetQuagganIDs(aWebHandler: TWebHandler): TStringArray;
+      function GetQuaggans(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2QuagganArray;
   end;
 
 { Main API class }

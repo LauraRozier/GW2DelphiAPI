@@ -12,6 +12,9 @@
         <Projects Include="Examples\GetColors\GetColors.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Examples\GetQuaggans\GetQuaggans.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="GetColors:Make">
         <MSBuild Projects="Examples\GetColors\GetColors.dproj" Targets="Make"/>
     </Target>
+    <Target Name="GetQuaggans">
+        <MSBuild Projects="Examples\GetQuaggans\GetQuaggans.dproj"/>
+    </Target>
+    <Target Name="GetQuaggans:Clean">
+        <MSBuild Projects="Examples\GetQuaggans\GetQuaggans.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GetQuaggans:Make">
+        <MSBuild Projects="Examples\GetQuaggans\GetQuaggans.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Development_Test;FetchRaw;GetColors"/>
+        <CallTarget Targets="Development_Test;FetchRaw;GetColors;GetQuaggans"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Development_Test:Clean;FetchRaw:Clean;GetColors:Clean"/>
+        <CallTarget Targets="Development_Test:Clean;FetchRaw:Clean;GetColors:Clean;GetQuaggans:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Development_Test:Make;FetchRaw:Make;GetColors:Make"/>
+        <CallTarget Targets="Development_Test:Make;FetchRaw:Make;GetColors:Make;GetQuaggans:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

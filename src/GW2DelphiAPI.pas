@@ -233,41 +233,14 @@ begin
 end;
 
 
-function TGW2APIMisc.GetBuild(aWebHandler: TWebHandler; aAPIVersion: TAPIVersion): TGW2Version;
+function TGW2APIMisc.GetBuild(aWebHandler: TWebHandler): TGW2Version;
 var
   Reply:   string;
   JSObject: TJSONObject;
 begin
-  case aAPIVersion of
-    APINone:
-      raise Exception.Create('Unsupported API version.');
-    APIv1:
-    begin
-      Reply     := aWebHandler.FetchEndpoint(APIv1, v1Build, nil);
-      JSObject  := TJSONObject.ParseJSONValue(Reply) as TJSONObject;
-      Result.id := JSObject.GetValue<Integer>('build_id');
-    end;
-    APIv2:
-    begin
-      Reply     := aWebHandler.FetchEndpoint(APIv2, v2Build, nil);
-      JSObject  := TJSONObject.ParseJSONValue(Reply) as TJSONObject;
-      Result.id := JSObject.GetValue<Integer>('id');
-    end;
-  end;
-end;
-
-
-procedure TGW2APIMisc.GetQuagganIDs(aWebHandler: TWebHandler; aStringList: TStringList);
-var
-  Reply:   string;
-  JSArr:   TJSONArray;
-  JSValue: TJSONValue;
-begin
-  Reply := aWebHandler.FetchEndpoint(APIv2, v2Quaggans, nil);
-  JSArr  := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
-
-  for JSValue in JSArr do
-    aStringList.Add(JSValue.Value);
+  Reply    := aWebHandler.FetchEndpoint(APIv2, v2Build, nil);
+  JSObject := TJSONObject.ParseJSONValue(Reply) as TJSONObject;
+  Result   := TJson.JsonToObject<TGW2Version>(JSObject);
 end;
 
 
@@ -275,39 +248,67 @@ function TGW2APIMisc.GetColorIDs(aWebHandler: TWebHandler): TIntegerArray;
 var
   Reply:   string;
   JSArr:   TJSONArray;
-  IntArr:  TIntegerArray;
   I:       Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Colors, nil);
   JSArr  := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
-  SetLength(IntArr, JSArr.Count);
+  SetLength(Result, JSArr.Count);
 
   for I := 0 to JSArr.Count - 1 do
-    IntArr[I] := StrToInt(JSArr.Items[I].Value);
-
-  Result := IntArr;
+    Result[I] := StrToInt(JSArr.Items[I].Value);
 end;
 
 
-function TGW2APIMisc.GetColors(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2ColorList;
+function TGW2APIMisc.GetColors(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2ColorArray;
 var
-  Reply:     string;
-  JSArr:     TJSONArray;
-  JSObject:  TJSONObject;
-  I:         Integer;
-  ColorList: TGW2ColorList;
+  Reply:      string;
+  JSArr:      TJSONArray;
+  JSObject:   TJSONObject;
+  I:          Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Colors, aParams);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
-  SetLength(ColorList, JSArr.Count);
+  SetLength(Result, JSArr.Count);
 
   for I := 0 to JSArr.Count - 1 do
   begin
     JSObject     := JSArr.Items[I] as TJSONObject;
-    ColorList[I] := TJson.JsonToObject<TGW2Color>(JSObject);
+    Result[I] := TJson.JsonToObject<TGW2Color>(JSObject);
   end;
+end;
 
-  Result := ColorList;
+
+function TGW2APIMisc.GetQuagganIDs(aWebHandler: TWebHandler): TStringArray;
+var
+  Reply:   string;
+  JSArr:   TJSONArray;
+  I:       Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Quaggans, nil);
+  JSArr  := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+    Result[I] := JSArr.Items[I].Value;
+end;
+
+
+function TGW2APIMisc.GetQuaggans(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2QuagganArray;
+var
+  Reply:        string;
+  JSArr:        TJSONArray;
+  JSObject:     TJSONObject;
+  I:            Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Quaggans, aParams);
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+  begin
+    JSObject  := JSArr.Items[I] as TJSONObject;
+    Result[I] := TJson.JsonToObject<TGW2Quaggan>(JSObject);
+  end;
 end;
 
 
