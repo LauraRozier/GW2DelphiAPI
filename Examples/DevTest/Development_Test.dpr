@@ -17,7 +17,7 @@ CONST
 var
   fGW2API:        TGW2API;
   fAPIRequestUrl: string;
-  fStringArr:     TStringArray;
+//  fStringArr:     TStringArray;
   fIntegerArr:    TIntegerArray;
   fTmpString:     string;
   fString:        string;
@@ -73,7 +73,7 @@ begin
     WriteLn;
     WriteLn('World IDs:');
     fIntegerArr := fGW2API.Misc.GetWorldIDs(fGW2API.WebHandler);
-    fTmpString := '';
+    fTmpString  := '';
 
     for fInteger in fIntegerArr do
       if fTmpString = '' then
@@ -91,7 +91,7 @@ begin
                         IntToStr(fIntegerArr[1]) + ',' +
                         IntToStr(fIntegerArr[2]);
     fParams[1].Name  := 'lang';
-    fParams[1].Value := 'en';
+    fParams[1].Value := CONST_API_Languages[langEN];
     fWorldArr        := fGW2API.Misc.GetWorlds(fGW2API.WebHandler, fParams);
     WriteLn('Worlds:');
 
