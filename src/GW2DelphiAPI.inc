@@ -19,9 +19,9 @@ type
 
   TAPIFunction = (
     // API version 1
-    v1Build, v1Colors, v1Continents, v1EventDetails, v1EventNames, v1Events,
-    v1Files, v1GuildDetails, v1ItemDetails, v1Items, v1MapFloor, v1MapNames,
-    v1Maps, v1RecipeDetails, v1Recipes, v1SkinDetails, v1Skins, v1WorldNames,
+    v1Continents, v1EventDetails, v1EventNames, v1Events, v1Files,
+    v1GuildDetails, v1ItemDetails, v1Items, v1MapFloor, v1MapNames, v1Maps,
+    v1RecipeDetails, v1Recipes, v1SkinDetails, v1Skins, v1WorldNames,
     v1WvwMatchDetails, v1WvwMatches, v1WvwObjectiveNames,
     // API version 2
     v2Account, v2AccountAchievements, v2AccountBank, v2AccountDyes,
@@ -208,7 +208,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0023';
+  CONST_VERSION_REVISION = 'r0024';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -230,12 +230,11 @@ const
 
   CONST_API_Functions: array [TAPIFunction] of string = (
     // API version 1
-    'build.json', 'colors.json', 'continents.json', 'event_details.json',
-    'event_names.json', 'events.json', 'files.json', 'guild_details.json',
-    'item_details.json', 'items.json', 'map_floor.json', 'map_names.json',
-    'maps.json', 'recipe_details.json', 'recipes.json', 'skin_details.json',
-    'skins.json', 'world_names.json', 'wvw/match_details.json',
-    'wvw/matches.json', 'wvw/objective_names.json',
+    'continents.json', 'event_details.json', 'event_names.json', 'events.json',
+    'files.json', 'guild_details.json', 'item_details.json', 'items.json',
+    'map_floor.json', 'map_names.json', 'maps.json', 'recipe_details.json',
+    'recipes.json', 'skin_details.json', 'skins.json', 'world_names.json',
+    'wvw/match_details.json', 'wvw/matches.json', 'wvw/objective_names.json',
     // API version 2
     'account', 'account/achievements', 'account/bank', 'account/dyes',
     'account/finishers', 'account/inventory', 'account/masteries',
@@ -303,6 +302,12 @@ type
       function GetColors(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2ColorArray;
       function GetQuagganIDs(aWebHandler: TWebHandler): TStringArray;
       function GetQuaggans(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2QuagganArray;
+      {
+        World
+        Currency
+        File
+        Mini
+      }
   end;
 
 { Main API class }

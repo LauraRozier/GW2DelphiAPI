@@ -19,7 +19,7 @@ Feature list:
 | :------                                   | :------:  | :------: |
 | `render.guildwars2.com`                   |           | ❓️       |
 | `MumbleLink`                              |           | ❓️       |
-| `/v1/build.json`                          | ✔         |         |
+| `/v1/build.json`                          | ❌         |         |
 | `/v1/colors.json`                         | ❌         |         |
 | `/v1/continents.json`                     |           | ✔       |
 | `/v1/event_details.json`                  |           | ✔       |
@@ -117,7 +117,7 @@ Feature list:
 | `/v2/pvp/seasons/:id/leaderboards/:board` |           | ❓️       |
 | `/v2/pvp/standings`                       |           | ✔       |
 | `/v2/pvp/stats`                           |           | ✔       |
-| `/v2/quaggans`                            | WIP       |         |
+| `/v2/quaggans`                            | ✔         |         |
 | `/v2/recipes`                             |           | ✔       |
 | `/v2/recipes/search`                      |           | ✔       |
 | `/v2/skills`                              |           | ✔       |
