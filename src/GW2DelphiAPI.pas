@@ -428,6 +428,47 @@ begin
 end;
 
 
+//* Version: 29
+//* aWebHandler: The API webhandler object
+//* Result: Returns an array of file IDs
+function TGW2APIMisc.GetFileIDs(aWebHandler: TWebHandler): TStringArray;
+var
+  Reply:   string;
+  JSArr:   TJSONArray;
+  I:       Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Files, nil);
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+    Result[I] := JSArr.Items[I].Value;
+end;
+
+
+//* Version: 29
+//* aWebHandler: The API webhandler object
+//* aParams: The parameters (ids)
+//* Result: Returns an array of file objects
+function TGW2APIMisc.GetFiles(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2FileArray;
+var
+  Reply:        string;
+  JSArr:        TJSONArray;
+  JSObject:     TJSONObject;
+  I:            Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Files, aParams);
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+  begin
+    JSObject  := JSArr.Items[I] as TJSONObject;
+    Result[I] := TJson.JsonToObject<TGW2File>(JSObject);
+  end;
+end;
+
+
 { Main API class }
 //TODO 1 -oThimo -cMain: Add functions/procedures for the API
 constructor TGW2API.Create(aTimeoutSeconds: Integer = 15);
