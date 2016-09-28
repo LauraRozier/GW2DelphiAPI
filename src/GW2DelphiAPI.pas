@@ -141,7 +141,23 @@ end;
 //* Result: Returns the full reply in plain-text
 function TWebHandler.FetchRawEndpoint(aUrl: string): string;
 begin
-   Result := SendRequest(aUrl).Msg;
+  Result := SendRequest(aUrl).Msg;
+end;
+
+
+//* Version: 32
+//* Class: WebHandler
+//* Retrieve the raw reply of a specific URL
+//* aUrl: The complete URL that you wish to call
+//* Result: Returns the full reply as an object
+function TWebHandler.FetchRawEndpoint<T>(aUrl: string): T;
+var
+  Response: TErrorMessage;
+  JSObject: TJSONObject;
+begin
+  Response := SendRequest(aUrl);
+  JSObject := TJSONObject.ParseJSONValue(Response.Msg) as TJSONObject;
+  Result   := TJson.JsonToObject<T>(JSObject);
 end;
 
 
@@ -171,6 +187,34 @@ begin
 end;
 
 
+//* Version: 32
+//* Class: WebHandler
+//* Retrieve the raw reply of a specific API version and function with parameters
+//* aVersion: The API version enum value
+//* aFunction: The API function enum value
+//* aParams: An array of parameters, these can be IDs and Language codes
+//* Result: Returns the full reply as an object
+function TWebHandler.FetchEndpoint<T>(aVersion: TAPIVersion; aFunction: TAPIFunction; aParams: TUrlParams): T;
+var
+  Url:      string;
+  Response: TErrorMessage;
+  JSObject: TJSONObject;
+begin
+  Url := CONST_API_URL_BASE + CONST_API_Versions[aVersion] + '/' + CONST_API_Functions[aFunction];
+
+  if (Length(aParams) > 0) and not (aParams = nil) then
+    Url := Url + BuildParamString(aParams);
+
+  Response := SendRequest(Url);
+
+  if Response.HadError then
+    raise Exception.Create('Something went wrong with this request!');
+
+  JSObject := TJSONObject.ParseJSONValue(Response.Msg) as TJSONObject;
+  Result   := TJson.JsonToObject<T>(JSObject);
+end;
+
+
 //* Version: 15
 //* Class: WebHandler
 //* Retrieve the raw reply of a specific API version and function with parameters and authentication
@@ -189,6 +233,27 @@ begin
   aParams[Length(aParams) - 1].Value := aAuthString;
 
   Result := FetchEndpoint(aVersion, aFunction, aParams);
+end;
+
+
+//* Version: 32
+//* Class: WebHandler
+//* Retrieve the raw reply of a specific API version and function with parameters and authentication
+//* aVersion: The API version enum value
+//* aFunction: The API function enum value
+//* aParams: An array of parameters, these can be IDs and Language codes
+//* aAuthString: Your API auth string
+//* Result: Returns the full reply as an object
+function TWebHandler.FetchAuthEndpoint<T>(aVersion: TAPIVersion; aFunction: TAPIFunction; aParams: TUrlParams; aAuthString: string): T;
+begin
+  if aAuthString = '' then
+    raise Exception.Create('This API function requires authentication.');
+
+  SetLength(aParams, Length(aParams) + 1);
+  aParams[Length(aParams) - 1].Name  := 'access_token';
+  aParams[Length(aParams) - 1].Value := aAuthString;
+
+  Result := FetchEndpoint<T>(aVersion, aFunction, aParams);
 end;
 
 

@@ -235,7 +235,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0031';
+  CONST_VERSION_REVISION = 'r0032';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -298,9 +298,18 @@ type
       function BuildParamString(aParams: TUrlParams): string;
     public
       constructor Create;
-      function FetchRawEndpoint(aUrl: string): string;
-      function FetchEndpoint(aVersion: TAPIVersion; aFunction: TAPIFunction; aParams: TUrlParams): string;
-      function FetchAuthEndpoint(aVersion: TAPIVersion; aFunction: TAPIFunction; aParams: TUrlParams; aAuthString: string): string;
+      function FetchRawEndpoint(aUrl: string): string; Overload;
+      function FetchRawEndpoint<T: class, constructor>(aUrl: string): T; Overload;
+      function FetchEndpoint(aVersion: TAPIVersion; aFunction: TAPIFunction;
+                             aParams: TUrlParams): string; Overload;
+      function FetchEndpoint<T: class, constructor>(aVersion: TAPIVersion; aFunction: TAPIFunction;
+                                aParams: TUrlParams): T; Overload;
+      function FetchAuthEndpoint(aVersion: TAPIVersion; aFunction: TAPIFunction;
+                                 aParams: TUrlParams;
+                                 aAuthString: string): string; Overload;
+      function FetchAuthEndpoint<T: class, constructor>(aVersion: TAPIVersion; aFunction: TAPIFunction;
+                                    aParams: TUrlParams;
+                                    aAuthString: string): T; Overload;
       Property HTTPClient: TIdHTTP Read fHTTPClient Write fHTTPClient;
   end;
 
