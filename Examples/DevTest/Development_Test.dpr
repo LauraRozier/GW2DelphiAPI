@@ -87,6 +87,24 @@ begin
     WriteLn;
     SetLength(fParams, 2);
     fParams[0].Name  := 'ids';
+    fParams[0].Value := '1,2,3';
+    fParams[1].Name  := 'lang';
+    fParams[1].Value := CONST_API_Languages[langEN];
+    fWorldArr        := fGW2API.Misc.GetWorlds(fGW2API.WebHandler, fParams);
+    WriteLn('Crash Test:');
+
+    for fWorld in fWorldArr do
+    begin
+      WriteLn(#9 + 'ID: '         + IntToStr(fWorld.id));
+      WriteLn(#9 + 'Name: '       + fWorld.Name);
+      WriteLn(#9 + 'Population: ' + fWorld.Population);
+      WriteLn;
+    end;
+
+    WriteLn;
+    WriteLn;
+    SetLength(fParams, 2);
+    fParams[0].Name  := 'ids';
     fParams[0].Value := IntToStr(fIntegerArr[0]) + ',' +
                         IntToStr(fIntegerArr[1]) + ',' +
                         IntToStr(fIntegerArr[2]);

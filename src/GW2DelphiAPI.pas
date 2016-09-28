@@ -111,6 +111,12 @@ begin
   if not Error.HadError then
     Error.Msg := Response;
 
+  if fHTTPClient.ResponseCode = 404 then
+    raise Exception.Create('Error: API function or value does not exist!');
+
+  if fHTTPClient.ResponseCode = 403 then
+    raise Exception.Create('Error: Unauthorized access, please provide a valid API key!');
+
   Result := Error;
 end;
 
@@ -140,8 +146,15 @@ end;
 //* aUrl: The complete URL that you wish to call
 //* Result: Returns the full reply in plain-text
 function TWebHandler.FetchRawEndpoint(aUrl: string): string;
+var
+  Response: TErrorMessage;
 begin
-  Result := SendRequest(aUrl).Msg;
+  Response := SendRequest(aUrl);
+
+  if Response.HadError then
+    raise Exception.Create(Response.Msg);
+
+  Result := Response.Msg;
 end;
 
 
@@ -156,6 +169,10 @@ var
   JSObject: TJSONObject;
 begin
   Response := SendRequest(aUrl);
+
+  if Response.HadError then
+    raise Exception.Create(Response.Msg);
+
   JSObject := TJSONObject.ParseJSONValue(Response.Msg) as TJSONObject;
   Result   := TJson.JsonToObject<T>(JSObject);
 end;
@@ -181,7 +198,7 @@ begin
   Response := SendRequest(Url);
 
   if Response.HadError then
-    raise Exception.Create('Something went wrong with this request!');
+    raise Exception.Create(Response.Msg);
 
   Result := Response.Msg;
 end;
@@ -208,7 +225,7 @@ begin
   Response := SendRequest(Url);
 
   if Response.HadError then
-    raise Exception.Create('Something went wrong with this request!');
+    raise Exception.Create(Response.Msg);
 
   JSObject := TJSONObject.ParseJSONValue(Response.Msg) as TJSONObject;
   Result   := TJson.JsonToObject<T>(JSObject);
