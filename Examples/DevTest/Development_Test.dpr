@@ -83,7 +83,7 @@ begin
 
     WriteLn(fTmpString);
 
-    WriteLn;
+    {WriteLn;
     WriteLn;
     SetLength(fParams, 2);
     fParams[0].Name  := 'ids';
@@ -99,7 +99,7 @@ begin
       WriteLn(#9 + 'Name: '       + fWorld.Name);
       WriteLn(#9 + 'Population: ' + fWorld.Population);
       WriteLn;
-    end;
+    end;}
 
     WriteLn;
     WriteLn;

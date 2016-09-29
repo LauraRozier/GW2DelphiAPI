@@ -326,15 +326,8 @@ end;
 //* aAuthStr: The API auth string
 //* Result: Returns an API security token
 function TGW2Helper.GetTokenInfo(aWebHandler: TWebHandler; aAuthStr: string): TGW2Token;
-var
-  Reply:     string;
-  JSObject:  TJSONObject;
-  AuthToken: TGW2Token;
 begin
-  Reply     := aWebHandler.FetchAuthEndpoint(APIv2, v2Tokeninfo, nil, aAuthStr);
-  JSObject  := TJSONObject.ParseJSONValue(Reply) as TJSONObject;
-  AuthToken := TJson.JsonToObject<TGW2Token>(JSObject);
-  Result    := AuthToken;
+  Result := aWebHandler.FetchAuthEndpoint<TGW2Token>(APIv2, v2Tokeninfo, nil, aAuthStr);
 end;
 
 
@@ -344,13 +337,8 @@ end;
 //* aWebHandler: The API webhandler object
 //* Result: Returns the GW2 build number
 function TGW2APIMisc.GetBuild(aWebHandler: TWebHandler): TGW2Version;
-var
-  Reply:   string;
-  JSObject: TJSONObject;
 begin
-  Reply    := aWebHandler.FetchEndpoint(APIv2, v2Build, nil);
-  JSObject := TJSONObject.ParseJSONValue(Reply) as TJSONObject;
-  Result   := TJson.JsonToObject<TGW2Version>(JSObject);
+  Result := aWebHandler.FetchEndpoint<TGW2Version>(APIv2, v2Build, nil);
 end;
 
 
@@ -391,7 +379,7 @@ begin
 
   for I := 0 to JSArr.Count - 1 do
   begin
-    JSObject     := JSArr.Items[I] as TJSONObject;
+    JSObject  := JSArr.Items[I] as TJSONObject;
     Result[I] := TJson.JsonToObject<TGW2Color>(JSObject);
   end;
 end;
@@ -455,7 +443,7 @@ begin
   SetLength(Result, JSArr.Count);
 
   for I := 0 to JSArr.Count - 1 do
-    Result[I] := StrToInt(JSArr.Items[I].Value)
+    Result[I] := StrToInt(JSArr.Items[I].Value);
 end;
 
 
