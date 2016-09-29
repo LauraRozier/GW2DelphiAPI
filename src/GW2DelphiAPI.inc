@@ -219,32 +219,6 @@ type
 
   TGW2Account = class
     private
-      fId:        string;
-      fName:      string;
-      fWorld:     Integer;
-      fCommander: Boolean;
-      fGuilds:    TStringArray;
-      fCreated:   string;
-      fAccess:    string;
-    public
-      property id:        string       Read fId        Write fId;
-      property Name:      string       Read fName      Write fName;
-      property World:     Integer      Read fWorld     Write fWorld;
-      property Commander: Boolean      Read fCommander Write fCommander;
-      property Guilds:    TStringArray Read fGuilds    Write fGuilds;
-      property Created:   string       Read fCreated   Write fCreated; // ISO-8601 standard timestamp
-      property Access:    string       Read fAccess    Write fAccess;
-      {
-        Possible values for Access:
-          'None'          – should probably never happen
-          'PlayForFree'   – has not yet purchased the game
-          'GuildWars2'    – has purchased base game, but no expansions
-          'HeartOfThorns' – has purchased HoT
-      }
-  end;
-
-  TGW2AccountWithProg = class // Requires the additional progression; permission flag
-    private
       fId:            string;
       fName:          string;
       fWorld:         Integer;
@@ -270,6 +244,7 @@ type
           'GuildWars2'    – has purchased base game, but no expansions
           'HeartOfThorns' – has purchased HoT
       }
+      // The properties below require the progression permission flag
       property Fractal_level: Integer      Read fFractal_level Write fFractal_level;
       property Daily_ap:      Integer      Read fDaily_ap      Write fDaily_ap;
       property Monthly_ap:    Integer      Read fMonthly_ap    Write fMonthly_ap;
@@ -403,7 +378,7 @@ type
 
 TGW2APIAccount = class(TObject)
   public
-    function GetAccount(aWebHandler: TWebHandler): TGW2Account;
+    function GetAccount(aWebHandler: TWebHandler; aState: TStateHoler): TGW2Account;
 end;
 
 { Main API class }
@@ -413,13 +388,15 @@ end;
       fWebHandler:  TWebHandler;
       fUtils:       TGW2Helper;
       fMisc:        TGW2APIMisc;
+      fAccount:     TGW2APIAccount;
     Public
       constructor Create(aTimeoutSeconds: Integer = 15);
       destructor Destroy; Override;
       procedure SetTimeout(aSeconds: SmallInt);
       function Authenticate(aAuthString: string): string;
-      Property State:      TStateHoler Read fStateHolder;
-      Property WebHandler: TWebHandler Read fWebHandler;
-      Property Utils:      TGW2Helper  Read fUtils;
-      Property Misc:       TGW2APIMisc Read fMisc;
+      Property State:      TStateHoler    Read fStateHolder;
+      Property WebHandler: TWebHandler    Read fWebHandler;
+      Property Utils:      TGW2Helper     Read fUtils;
+      Property Misc:       TGW2APIMisc    Read fMisc;
+      Property Account:    TGW2APIAccount Read fAccount;
   end;

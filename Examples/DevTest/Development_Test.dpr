@@ -25,6 +25,7 @@ var
   fParams:        TUrlParams;
   fWorldArr:      TGW2WorldArray;
   fWorld:         TGW2World;
+  fAccount:       TGW2Account;
 
 begin
   try
@@ -120,6 +121,30 @@ begin
       WriteLn(#9 + 'Population: ' + fWorld.Population);
       WriteLn;
     end;
+
+    WriteLn;
+    WriteLn;
+    WriteLn('Account:');
+    fAccount   := fGW2API.Account.GetAccount(fGW2API.WebHandler, fGW2API.State);
+    fTmpString := '';
+    WriteLn;
+    WriteLn('ID: '    +     fAccount.id);
+    WriteLn('Name: '  +     fAccount.Name);
+    WriteLn('World: ' +     IntToStr(fAccount.World));
+    WriteLn('Commander: ' + BoolToStr(fAccount.Commander));
+
+    for fString in fAccount.Guilds do
+      if fTmpString = '' then
+        fTmpString := fString
+      else
+        fTmpString := fTmpString + ', ' + fString;
+
+    WriteLn('Guilds: '        + fTmpString);
+    WriteLn('Created: '       + fAccount.Created);
+    WriteLn('Access: '        + fAccount.Access);
+    WriteLn('Fractal_level: ' + IntToStr(fAccount.Fractal_level));
+    WriteLn('Daily_ap: '      + IntToStr(fAccount.Daily_ap));
+    WriteLn('Monthly_ap: '    + IntToStr(fAccount.Monthly_ap));
 
     FreeAndNil(fGW2API);
   except

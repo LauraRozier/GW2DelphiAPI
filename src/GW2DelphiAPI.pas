@@ -640,6 +640,22 @@ begin
 end;
 
 
+function TGW2APIAccount.GetAccount(aWebHandler: TWebHandler; aState: TStateHoler): TGW2Account;
+var
+  Utils: TGW2Helper;
+begin
+  Utils := TGW2Helper.Create;
+
+  if aState.AuthString <> '' then
+    if Utils.ArrContains(aState.AuthToken.Permissions, 'progression') then
+      Result := aWebHandler.FetchAuthEndpoint<TGW2Account>(APIv2, v2Account, nil, aState.AuthString)
+    else
+      raise Exception.Create('Error: The provided API key does not have enough permissions!')
+  else
+    raise Exception.Create('Error: No valid API key has been entered!')
+end;
+
+
 { Main API class }
 //TODO 1 -oThimo -cMain: Add functions/procedures for the API
 constructor TGW2API.Create(aTimeoutSeconds: Integer = 15);
@@ -657,6 +673,7 @@ begin
   fWebHandler.HTTPClient := fStateHolder.HTTPClient;
   fUtils                 := TGW2Helper.Create;
   fMisc                  := TGW2APIMisc.Create;
+  fAccount               := TGW2APIAccount.Create;
 end;
 
 
@@ -667,6 +684,7 @@ begin
   FreeAndNil(fStateHolder.HTTPClient);
   FreeAndNil(fUtils);
   FreeAndNil(fMisc);
+  FreeAndNil(fAccount);
 end;
 
 
