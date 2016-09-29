@@ -331,6 +331,46 @@ begin
 end;
 
 
+//* Version: 36
+//* Class: Utils
+//* aArr: The array to check
+//* aValue: The value to search
+//* Result: True if the value exists
+function TGW2Helper.ArrContains(aArr: TStringArray; aValue: string): Boolean;
+var
+  I: Integer;
+begin
+  Result := False;
+
+  for I := Low(aArr) to High(aArr) do
+    if aArr[I] = aValue then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+
+//* Version: 36
+//* Class: Utils
+//* aArr: The array to check
+//* aValue: The value to search
+//* Result: True if the value exists
+function TGW2Helper.ArrContains(aArr: TIntegerArray; aValue: Integer): Boolean;
+var
+  I: Integer;
+begin
+  Result := False;
+
+  for I := Low(aArr) to High(aArr) do
+    if aArr[I] = aValue then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+
 { API Misc functions class }
 //* Version: 9
 //* Class: Misc
