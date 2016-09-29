@@ -217,6 +217,64 @@ type
 
   TGW2MiniArray = array of TGW2Mini;
 
+  TGW2Account = class
+    private
+      fId:        string;
+      fName:      string;
+      fWorld:     Integer;
+      fCommander: Boolean;
+      fGuilds:    TStringArray;
+      fCreated:   string;
+      fAccess:    string;
+    public
+      property id:        string       Read fId        Write fId;
+      property Name:      string       Read fName      Write fName;
+      property World:     Integer      Read fWorld     Write fWorld;
+      property Commander: Boolean      Read fCommander Write fCommander;
+      property Guilds:    TStringArray Read fGuilds    Write fGuilds;
+      property Created:   string       Read fCreated   Write fCreated; // ISO-8601 standard timestamp
+      property Access:    string       Read fAccess    Write fAccess;
+      {
+        Possible values for Access:
+          'None'          – should probably never happen
+          'PlayForFree'   – has not yet purchased the game
+          'GuildWars2'    – has purchased base game, but no expansions
+          'HeartOfThorns' – has purchased HoT
+      }
+  end;
+
+  TGW2AccountWithProg = class // Requires the additional progression; permission flag
+    private
+      fId:            string;
+      fName:          string;
+      fWorld:         Integer;
+      fCommander:     Boolean;
+      fGuilds:        TStringArray;
+      fCreated:       string;
+      fAccess:        string;
+      fFractal_level: Integer;
+      fDaily_ap:      Integer;
+      fMonthly_ap:    Integer;
+    public
+      property id:            string       Read fId            Write fId;
+      property Name:          string       Read fName          Write fName;
+      property World:         Integer      Read fWorld         Write fWorld;
+      property Commander:     Boolean      Read fCommander     Write fCommander;
+      property Guilds:        TStringArray Read fGuilds        Write fGuilds;
+      property Created:       string       Read fCreated       Write fCreated; // ISO-8601 standard timestamp
+      property Access:        string       Read fAccess        Write fAccess;
+      {
+        Possible values for Access:
+          'None'          – should probably never happen
+          'PlayForFree'   – has not yet purchased the game
+          'GuildWars2'    – has purchased base game, but no expansions
+          'HeartOfThorns' – has purchased HoT
+      }
+      property Fractal_level: Integer      Read fFractal_level Write fFractal_level;
+      property Daily_ap:      Integer      Read fDaily_ap      Write fDaily_ap;
+      property Monthly_ap:    Integer      Read fMonthly_ap    Write fMonthly_ap;
+  end;
+
   // States
   TStateHoler = record
     HTTPTimeout: Integer;
@@ -235,7 +293,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0033';
+  CONST_VERSION_REVISION = 'r0035';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -340,6 +398,11 @@ type
       function GetMiniIDs(aWebHandler:     TWebHandler):                      TIntegerArray;
       function GetMinis(aWebHandler:       TWebHandler; aParams: TUrlParams): TGW2MiniArray;
   end;
+
+TGW2APIAccount = class(TObject)
+  public
+    function GetAccount(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2Account;
+end;
 
 { Main API class }
   TGW2API = class(TObject)
