@@ -647,7 +647,7 @@ begin
   Utils := TGW2Helper.Create;
 
   if aState.AuthString <> '' then
-    if Utils.ArrContains(aState.AuthToken.Permissions, 'progression') then
+    if Utils.ArrContains(aState.AuthToken.Permissions, 'account') then
       Result := aWebHandler.FetchAuthEndpoint<TGW2Account>(APIv2, v2Account, nil, aState.AuthString)
     else
       raise Exception.Create('Error: The provided API key does not have enough permissions!')
