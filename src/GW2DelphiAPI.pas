@@ -388,9 +388,9 @@ end;
 //* Result: Returns an array of color IDs
 function TGW2APIMisc.GetColorIDs(aWebHandler: TWebHandler): TIntegerArray;
 var
-  Reply:   string;
-  JSArr:   TJSONArray;
-  I:       Integer;
+  Reply: string;
+  JSArr: TJSONArray;
+  I:     Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Colors, nil);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -408,10 +408,10 @@ end;
 //* Result: Returns an array of color objects
 function TGW2APIMisc.GetColors(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2ColorArray;
 var
-  Reply:      string;
-  JSArr:      TJSONArray;
-  JSObject:   TJSONObject;
-  I:          Integer;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Colors, aParams);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -431,9 +431,9 @@ end;
 //* Result: Returns an array of Quaggan IDs
 function TGW2APIMisc.GetQuagganIDs(aWebHandler: TWebHandler): TStringArray;
 var
-  Reply:   string;
-  JSArr:   TJSONArray;
-  I:       Integer;
+  Reply: string;
+  JSArr: TJSONArray;
+  I:     Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Quaggans, nil);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -451,10 +451,10 @@ end;
 //* Result: Returns an array of Quaggan objects
 function TGW2APIMisc.GetQuaggans(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2QuagganArray;
 var
-  Reply:        string;
-  JSArr:        TJSONArray;
-  JSObject:     TJSONObject;
-  I:            Integer;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Quaggans, aParams);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -474,9 +474,9 @@ end;
 //* Result: Returns an array of world IDs
 function TGW2APIMisc.GetWorldIDs(aWebHandler: TWebHandler): TIntegerArray;
 var
-  Reply:   string;
-  JSArr:   TJSONArray;
-  I:       Integer;
+  Reply: string;
+  JSArr: TJSONArray;
+  I:     Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Worlds, nil);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -494,10 +494,10 @@ end;
 //* Result: Returns an array of world objects
 function TGW2APIMisc.GetWorlds(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2WorldArray;
 var
-  Reply:        string;
-  JSArr:        TJSONArray;
-  JSObject:     TJSONObject;
-  I:            Integer;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Worlds, aParams);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -517,9 +517,9 @@ end;
 //* Result: Returns an array of currency IDs
 function TGW2APIMisc.GetCurrencyIDs(aWebHandler: TWebHandler): TIntegerArray;
 var
-  Reply:   string;
-  JSArr:   TJSONArray;
-  I:       Integer;
+  Reply: string;
+  JSArr: TJSONArray;
+  I:     Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Currencies, nil);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -537,10 +537,10 @@ end;
 //* Result: Returns an array of currency objects
 function TGW2APIMisc.GetCurrencies(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2CurrencyArray;
 var
-  Reply:        string;
-  JSArr:        TJSONArray;
-  JSObject:     TJSONObject;
-  I:            Integer;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Currencies, aParams);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -560,9 +560,9 @@ end;
 //* Result: Returns an array of file IDs
 function TGW2APIMisc.GetFileIDs(aWebHandler: TWebHandler): TStringArray;
 var
-  Reply:   string;
-  JSArr:   TJSONArray;
-  I:       Integer;
+  Reply: string;
+  JSArr: TJSONArray;
+  I:     Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Files, nil);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -580,10 +580,10 @@ end;
 //* Result: Returns an array of file objects
 function TGW2APIMisc.GetFiles(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2FileArray;
 var
-  Reply:        string;
-  JSArr:        TJSONArray;
-  JSObject:     TJSONObject;
-  I:            Integer;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Files, aParams);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -603,9 +603,9 @@ end;
 //* Result: Returns an array of Mini IDs
 function TGW2APIMisc.GetMiniIDs(aWebHandler: TWebHandler): TIntegerArray;
 var
-  Reply:   string;
-  JSArr:   TJSONArray;
-  I:       Integer;
+  Reply: string;
+  JSArr: TJSONArray;
+  I:     Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Minis, nil);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -623,10 +623,10 @@ end;
 //* Result: Returns an array of Mini objects
 function TGW2APIMisc.GetMinis(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2MiniArray;
 var
-  Reply:        string;
-  JSArr:        TJSONArray;
-  JSObject:     TJSONObject;
-  I:            Integer;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
 begin
   Reply := aWebHandler.FetchEndpoint(APIv2, v2Minis, aParams);
   JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -668,7 +668,7 @@ end;
 //* Result: Returns an array of account achievements
 function TGW2APIAccount.GetAchievements(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountAchievementArray;
 var
-  Utils: TGW2Helper;
+  Utils:    TGW2Helper;
   Reply:    string;
   JSArr:    TJSONArray;
   JSObject: TJSONObject;
@@ -677,7 +677,7 @@ begin
   Utils := TGW2Helper.Create;
 
   if aState.AuthString <> '' then
-    if Utils.ArrContains(aState.AuthToken.Permissions, 'account') then
+    if Utils.ArrContains(aState.AuthToken.Permissions, 'progression') then
     begin
       Reply := aWebHandler.FetchAuthEndpoint(APIv2, v2AccountAchievements, nil, aState.AuthString);
       JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -687,6 +687,43 @@ begin
       begin
         JSObject  := JSArr.Items[I] as TJSONObject;
         Result[I] := TJson.JsonToObject<TGW2AccountAchievement>(JSObject);
+      end;
+    end else
+      raise Exception.Create('Error: The provided API key does not have enough permissions!')
+  else
+    raise Exception.Create('Error: No valid API key has been entered!');
+end;
+
+
+//* Version: 42
+//* Class: Account
+//* aWebHandler: The API webhandler object
+//* aState: The API state object
+//* Result: Returns an array of account bank items
+function TGW2APIAccount.GetBank(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountBankItemArray;
+var
+  Utils:    TGW2Helper;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
+begin
+  Utils := TGW2Helper.Create;
+
+  if aState.AuthString <> '' then
+    if Utils.ArrContains(aState.AuthToken.Permissions, 'inventories') then
+    begin
+      Reply := aWebHandler.FetchAuthEndpoint(APIv2, v2AccountBank, nil, aState.AuthString);
+      JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+      SetLength(Result, JSArr.Count);
+
+      for I := 0 to JSArr.Count - 1 do
+      begin
+        if JSArr.Items[I].Null then
+          Continue;
+
+        JSObject  := JSArr.Items[I] as TJSONObject;
+        Result[I] := TJson.JsonToObject<TGW2AccountBankItem>(JSObject);
       end;
     end else
       raise Exception.Create('Error: The provided API key does not have enough permissions!')

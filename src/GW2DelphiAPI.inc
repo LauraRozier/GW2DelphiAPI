@@ -256,11 +256,11 @@ type
     private
       fId:       Integer;
       fDone:     Boolean;
+      fUnlocked: Boolean;
       fBits:     TIntegerArray;
       fCurrent:  Integer;
       fMax:      Integer;
       fRepeated: Integer;
-      fUnlocked: Boolean;
     public
       property id:       Integer       Read fId       Write fId;
       property Done:     Boolean       Read fDone     Write fDone;
@@ -272,6 +272,27 @@ type
   end;
 
   TGW2AccountAchievementArray = array of TGW2AccountAchievement;
+
+  TGW2AccountBankItem = class
+    private
+      fId:        Integer;
+      fCount:     Integer;
+      fBinding:   string;
+      fSkin:      Integer;
+      fUpgrades:  TIntegerArray;
+      fInfusions: TIntegerArray;
+      fBoundTo:   string;
+    public
+      property id:        Integer       Read fId        Write fId;
+      property Count:     Integer       Read fCount     Write fCount;
+      property Binding:   string        Read fBinding   Write fBinding;
+      property Skin:      Integer       Read fSkin      Write fSkin;
+      property Upgrades:  TIntegerArray Read fUpgrades  Write fUpgrades;
+      property Infusions: TIntegerArray Read fInfusions Write fInfusions;
+      property Bound_to:  string        Read fBoundTo   Write fBoundTo;
+  end;
+
+  TGW2AccountBankItemArray = array of TGW2AccountBankItem;
 
   // States
   TStateHoler = record
@@ -291,7 +312,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0041';
+  CONST_VERSION_REVISION = 'r0042';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -403,6 +424,7 @@ TGW2APIAccount = class(TObject)
   public
     function GetAccount(aWebHandler: TWebHandler; aState: TStateHoler): TGW2Account;
     function GetAchievements(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountAchievementArray;
+    function GetBank(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountBankItemArray;
 end;
 
 { Main API class }

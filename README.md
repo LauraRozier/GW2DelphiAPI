@@ -43,7 +43,7 @@ Required functionality:
 |                                           |           |         |  
 | `/v2/account`                             | ✔         |         |  
 | `/v2/account/achievements`                | ✔         |         |  
-| `/v2/account/bank`                        |           | ✔       |  
+| `/v2/account/bank`                        | ✔         |         |  
 | `/v2/account/dyes`                        |           | ✔       |  
 | `/v2/account/finishers`                   |           | ✔       |  
 | `/v2/account/inventory`                   |           | ✔       |  

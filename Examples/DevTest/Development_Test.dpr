@@ -12,21 +12,21 @@ uses
 CONST
   { These keys only exist for development purposes and will be deleted ASAP! }
   CONST_DEV_API_KEY = //'FDB8B876-3F72-CF42-866E-987B3384CCDAC5B93645-3BBA-4D65-9D7A-2FA518712370'; // Only Account, Character and Guild
-                      '9AA549AC-E2C5-994C-86D0-F49D255886DFB57AE877-A650-474A-8EC0-33FB67B3D12B'; // Less priv
-                      //'C94A01D8-5B6E-A044-B6BA-0040B4E177BEC3F9C17B-FD49-43BB-87EC-282DB2C11493'; // All priv
+                      //'9AA549AC-E2C5-994C-86D0-F49D255886DFB57AE877-A650-474A-8EC0-33FB67B3D12B'; // Less priv
+                      'C94A01D8-5B6E-A044-B6BA-0040B4E177BEC3F9C17B-FD49-43BB-87EC-282DB2C11493'; // All priv
 
 var
   fGW2API:         TGW2API;
   fAPIRequestUrl:  string;
-//  fStringArr:      TStringArray;
-  fIntegerArr:     TIntegerArray;
+  //fStringArr:      TStringArray;
+  //fIntegerArr:     TIntegerArray;
   fTmpString:      string;
   fString:         string;
   fInteger:        Integer;
   //fParams:         TUrlParams;
   fAccount:        TGW2Account;
-  fAchievementArr: TGW2AccountAchievementArray;
-  fAchievement:    TGW2AccountAchievement;
+  fBankItemArr:    TGW2AccountBankItemArray;
+  fBankItem:       TGW2AccountBankItem;
 
 begin
   try
@@ -98,27 +98,41 @@ begin
 
     WriteLn;
     WriteLn;
-    fAchievementArr := fGW2API.Account.GetAchievements(fGW2API.WebHandler, fGW2API.State);
-    WriteLn('Account Achievements:');
+    fBankItemArr := fGW2API.Account.GetBank(fGW2API.WebHandler, fGW2API.State);
+    WriteLn('Account Bank:');
 
-    for fAchievement in fAchievementArr do
+    for fBankItem in fBankItemArr do
     begin
-      WriteLn(#9 + 'ID: '       + IntToStr(fAchievement.id));
-      WriteLn(#9 + 'Done: '     + BoolToStr(fAchievement.Done));
-      WriteLn(#9 + 'Unlocked: ' + BoolToStr(fAchievement.Unlocked));
+      if fBankItem = nil then
+      begin
+        WriteLn(#9 + 'Empty');
+        WriteLn;
+        Continue;
+      end;
+
+      WriteLn(#9 + 'ID: '        + IntToStr(fBankItem.id));
+      WriteLn(#9 + 'Count: '     + IntToStr(fBankItem.Count));
+      WriteLn(#9 + 'Skin: '      + IntToStr(fBankItem.Skin));
       fTmpString := '';
-      fInteger   := 0;
 
-      for fInteger in fAchievement.Bits do
-      if fTmpString = '' then
-        fTmpString := IntToStr(fInteger)
-      else
-        fTmpString := fTmpString + ', ' + IntToStr(fInteger);
+      for fInteger in fBankItem.Upgrades do
+        if fTmpString = '' then
+          fTmpString := IntToStr(fInteger)
+        else
+          fTmpString := fTmpString + ', ' + IntToStr(fInteger);
 
-      WriteLn(#9 + 'Bits: '     + fTmpString);
-      WriteLn(#9 + 'Current: '  + IntToStr(fAchievement.Current));
-      WriteLn(#9 + 'Max: '      + IntToStr(fAchievement.Max));
-      WriteLn(#9 + 'Repeated: ' + IntToStr(fAchievement.Repeated));
+      WriteLn(#9 + 'Upgrades: '  + fTmpString);
+      fTmpString := '';
+
+      for fInteger in fBankItem.Infusions do
+        if fTmpString = '' then
+          fTmpString := IntToStr(fInteger)
+        else
+          fTmpString := fTmpString + ', ' + IntToStr(fInteger);
+
+      WriteLn(#9 + 'Infusions: ' + fTmpString);
+      WriteLn(#9 + 'Binding: '   + fBankItem.Binding);
+      WriteLn(#9 + 'Bound_to: '  + fBankItem.Bound_to);
       WriteLn;
     end;
 
