@@ -42,7 +42,7 @@ Required functionality:
 | `/v1/wvw/objective_names.json`            |           | ✔       |  
 |                                           |           |         |  
 | `/v2/account`                             | ✔         |         |  
-| `/v2/account/achievements`                |           | ✔       |  
+| `/v2/account/achievements`                | ✔         |         |  
 | `/v2/account/bank`                        |           | ✔       |  
 | `/v2/account/dyes`                        |           | ✔       |  
 | `/v2/account/finishers`                   |           | ✔       |  

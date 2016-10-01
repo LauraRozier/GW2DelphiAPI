@@ -11,22 +11,22 @@ uses
 
 CONST
   { These keys only exist for development purposes and will be deleted ASAP! }
-  CONST_DEV_API_KEY = 'FDB8B876-3F72-CF42-866E-987B3384CCDAC5B93645-3BBA-4D65-9D7A-2FA518712370'; // Only Account, Character and Guild
-                      //'9AA549AC-E2C5-994C-86D0-F49D255886DFB57AE877-A650-474A-8EC0-33FB67B3D12B'; // Less priv
+  CONST_DEV_API_KEY = //'FDB8B876-3F72-CF42-866E-987B3384CCDAC5B93645-3BBA-4D65-9D7A-2FA518712370'; // Only Account, Character and Guild
+                      '9AA549AC-E2C5-994C-86D0-F49D255886DFB57AE877-A650-474A-8EC0-33FB67B3D12B'; // Less priv
                       //'C94A01D8-5B6E-A044-B6BA-0040B4E177BEC3F9C17B-FD49-43BB-87EC-282DB2C11493'; // All priv
 
 var
-  fGW2API:        TGW2API;
-  fAPIRequestUrl: string;
-//  fStringArr:     TStringArray;
-  fIntegerArr:    TIntegerArray;
-  fTmpString:     string;
-  fString:        string;
-  fInteger:       Integer;
-  fParams:        TUrlParams;
-  fWorldArr:      TGW2WorldArray;
-  fWorld:         TGW2World;
-  fAccount:       TGW2Account;
+  fGW2API:         TGW2API;
+  fAPIRequestUrl:  string;
+//  fStringArr:      TStringArray;
+  fIntegerArr:     TIntegerArray;
+  fTmpString:      string;
+  fString:         string;
+  fInteger:        Integer;
+  //fParams:         TUrlParams;
+  fAccount:        TGW2Account;
+  fAchievementArr: TGW2AccountAchievementArray;
+  fAchievement:    TGW2AccountAchievement;
 
 begin
   try
@@ -73,58 +73,6 @@ begin
 
     WriteLn;
     WriteLn;
-    WriteLn('World IDs:');
-    fIntegerArr := fGW2API.Misc.GetWorldIDs(fGW2API.WebHandler);
-    fTmpString  := '';
-
-    for fInteger in fIntegerArr do
-      if fTmpString = '' then
-        fTmpString := IntToStr(fInteger)
-      else
-        fTmpString := fTmpString + ', ' + IntToStr(fInteger);
-
-    WriteLn(fTmpString);
-
-    {WriteLn;
-    WriteLn;
-    SetLength(fParams, 2);
-    fParams[0].Name  := 'ids';
-    fParams[0].Value := '1,2,3';
-    fParams[1].Name  := 'lang';
-    fParams[1].Value := CONST_API_Languages[langEN];
-    fWorldArr        := fGW2API.Misc.GetWorlds(fGW2API.WebHandler, fParams);
-    WriteLn('Crash Test:');
-
-    for fWorld in fWorldArr do
-    begin
-      WriteLn(#9 + 'ID: '         + IntToStr(fWorld.id));
-      WriteLn(#9 + 'Name: '       + fWorld.Name);
-      WriteLn(#9 + 'Population: ' + fWorld.Population);
-      WriteLn;
-    end;}
-
-    WriteLn;
-    WriteLn;
-    SetLength(fParams, 2);
-    fParams[0].Name  := 'ids';
-    fParams[0].Value := IntToStr(fIntegerArr[0]) + ',' +
-                        IntToStr(fIntegerArr[1]) + ',' +
-                        IntToStr(fIntegerArr[2]);
-    fParams[1].Name  := 'lang';
-    fParams[1].Value := CONST_API_Languages[langEN];
-    fWorldArr        := fGW2API.Misc.GetWorlds(fGW2API.WebHandler, fParams);
-    WriteLn('Worlds:');
-
-    for fWorld in fWorldArr do
-    begin
-      WriteLn(#9 + 'ID: '         + IntToStr(fWorld.id));
-      WriteLn(#9 + 'Name: '       + fWorld.Name);
-      WriteLn(#9 + 'Population: ' + fWorld.Population);
-      WriteLn;
-    end;
-
-    WriteLn;
-    WriteLn;
     WriteLn('Account:');
     fAccount   := fGW2API.Account.GetAccount(fGW2API.WebHandler, fGW2API.State);
     fTmpString := '';
@@ -147,6 +95,32 @@ begin
     WriteLn('Daily_ap: '      + IntToStr(fAccount.Daily_ap));
     WriteLn('Monthly_ap: '    + IntToStr(fAccount.Monthly_ap));
     WriteLn('Wvw_rank: '      + IntToStr(fAccount.Wvw_rank));
+
+    WriteLn;
+    WriteLn;
+    fAchievementArr := fGW2API.Account.GetAchievements(fGW2API.WebHandler, fGW2API.State);
+    WriteLn('Account Achievements:');
+
+    for fAchievement in fAchievementArr do
+    begin
+      WriteLn(#9 + 'ID: '       + IntToStr(fAchievement.id));
+      WriteLn(#9 + 'Done: '     + BoolToStr(fAchievement.Done));
+      WriteLn(#9 + 'Unlocked: ' + BoolToStr(fAchievement.Unlocked));
+      fTmpString := '';
+      fInteger   := 0;
+
+      for fInteger in fAchievement.Bits do
+      if fTmpString = '' then
+        fTmpString := IntToStr(fInteger)
+      else
+        fTmpString := fTmpString + ', ' + IntToStr(fInteger);
+
+      WriteLn(#9 + 'Bits: '     + fTmpString);
+      WriteLn(#9 + 'Current: '  + IntToStr(fAchievement.Current));
+      WriteLn(#9 + 'Max: '      + IntToStr(fAchievement.Max));
+      WriteLn(#9 + 'Repeated: ' + IntToStr(fAchievement.Repeated));
+      WriteLn;
+    end;
 
     FreeAndNil(fGW2API);
   except

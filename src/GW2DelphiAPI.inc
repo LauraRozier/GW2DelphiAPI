@@ -252,6 +252,27 @@ type
       property Wvw_rank:      Integer      Read fWvw_rank      Write fWvw_rank;
   end;
 
+  TGW2AccountAchievement = class
+    private
+      fId:       Integer;
+      fDone:     Boolean;
+      fBits:     TIntegerArray;
+      fCurrent:  Integer;
+      fMax:      Integer;
+      fRepeated: Integer;
+      fUnlocked: Boolean;
+    public
+      property id:       Integer       Read fId       Write fId;
+      property Done:     Boolean       Read fDone     Write fDone;
+      property Unlocked: Boolean       Read fUnlocked Write fUnlocked;
+      property Bits:     TIntegerArray Read fBits     Write fBits;
+      property Current:  Integer       Read fCurrent  Write fCurrent;
+      property Max:      Integer       Read fMax      Write fMax;
+      property Repeated: Integer       Read fRepeated Write fRepeated;
+  end;
+
+  TGW2AccountAchievementArray = array of TGW2AccountAchievement;
+
   // States
   TStateHoler = record
     HTTPTimeout: Integer;
@@ -270,7 +291,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0039';
+  CONST_VERSION_REVISION = 'r0041';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -381,6 +402,7 @@ type
 TGW2APIAccount = class(TObject)
   public
     function GetAccount(aWebHandler: TWebHandler; aState: TStateHoler): TGW2Account;
+    function GetAchievements(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountAchievementArray;
 end;
 
 { Main API class }
