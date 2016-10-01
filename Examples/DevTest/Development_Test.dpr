@@ -146,6 +146,7 @@ begin
     WriteLn('Fractal_level: ' + IntToStr(fAccount.Fractal_level));
     WriteLn('Daily_ap: '      + IntToStr(fAccount.Daily_ap));
     WriteLn('Monthly_ap: '    + IntToStr(fAccount.Monthly_ap));
+    WriteLn('Wvw_rank: '      + IntToStr(fAccount.Wvw_rank));
 
     FreeAndNil(fGW2API);
   except

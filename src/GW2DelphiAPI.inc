@@ -229,6 +229,7 @@ type
       fFractal_level: Integer;
       fDaily_ap:      Integer;
       fMonthly_ap:    Integer;
+      fWvw_rank:      Integer;
     public
       property id:            string       Read fId            Write fId;
       property Name:          string       Read fName          Write fName;
@@ -248,6 +249,7 @@ type
       property Fractal_level: Integer      Read fFractal_level Write fFractal_level;
       property Daily_ap:      Integer      Read fDaily_ap      Write fDaily_ap;
       property Monthly_ap:    Integer      Read fMonthly_ap    Write fMonthly_ap;
+      property Wvw_rank:      Integer      Read fWvw_rank      Write fWvw_rank;
   end;
 
   // States
