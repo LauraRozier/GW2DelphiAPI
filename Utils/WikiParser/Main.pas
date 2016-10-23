@@ -43,7 +43,7 @@ type
   end;
 
 const
-  VAR_TYPE_COUNT = 37;
+  VAR_TYPE_COUNT = 63;
   VAR_TYPE_NAME: array[0..VAR_TYPE_COUNT-1] of string = (
     // System default types
     'Byte', 'Shortint', 'Smallint', 'Word', 'Integer', 'Cardinal', 'Single',
@@ -54,12 +54,22 @@ const
     // GW2DA custom types
     'TAPIVersion', 'TAPIFunction', 'TAPIPermissions', 'TWebHandler',
     'TGW2Token', 'TGW2Version', 'TGW2ColorDetail', 'TGW2Color', 'TGW2Quaggan',
-    'TGW2World', 'TGW2Currency', 'TGW2File', 'TGW2Mini',
+    'TGW2World', 'TGW2Currency', 'TGW2File', 'TGW2Mini', 'TGW2Account',
+    'TGW2AccountAchievement', 'TGW2AccountBankItem', 'TGW2AccountFinisher',
+    'TGW2AccountInventoryItem', 'TGW2AccountMastery', 'TGW2AccountMaterial',
+    'TGW2AccountWalletItem', 'TGW2AchievementTier', 'TGW2AchievementReward',
+    'TGW2AchievementBit', 'TGW2Achievement', 'TErrorMessage', 'TUrlParam',
+    'TStateHoler',
     // Werewolf types
     'TIntegerArray', 'TStringArray', 'TRGBArray',
     'TUrlParams', 'TGW2ColorArray', 'TGW2QuagganArray',
     'TGW2WorldArray', 'TGW2CurrencyArray', 'TGW2FileArray',
-    'TGW2MiniArray'
+    'TGW2MiniArray', 'TGW2AccountAchievementArray', 'TGW2AccountBankItemArray',
+    'TGW2AccountFinisherArray', 'TGW2AccountInventoryItemArray',
+    'TGW2AccountMasteryArray', 'TGW2AccountMaterialArray',
+    'TGW2AccountWalletItemArray', 'TGW2AchievementTierArray',
+    'TGW2AchievementRewardArray', 'TGW2AchievementBitArray',
+    'TGW2AchievementArray'
   );
 
   VAR_TYPE_ALIAS: array[0..VAR_TYPE_COUNT-1] of string = (
@@ -72,12 +82,22 @@ const
     // GW2DA custom types
     'TAPIVersion', 'TAPIFunction', 'TAPIPermissions', 'TWebHandler',
     'TGW2Token', 'TGW2Version', 'TGW2ColorDetail', 'TGW2Color', 'TGW2Quaggan',
-    'TGW2World', 'TGW2Currency', 'TGW2File', 'TGW2Mini',
+    'TGW2World', 'TGW2Currency', 'TGW2File', 'TGW2Mini', 'TGW2Account',
+    'TGW2AccountAchievement', 'TGW2AccountBankItem', 'TGW2AccountFinisher',
+    'TGW2AccountInventoryItem', 'TGW2AccountMastery', 'TGW2AccountMaterial',
+    'TGW2AccountWalletItem', 'TGW2AchievementTier', 'TGW2AchievementReward',
+    'TGW2AchievementBit', 'TGW2Achievement', 'TErrorMessage', 'TUrlParam',
+    'TStateHoler',
     // Werewolf types
     'array of Integer', 'array of string', 'array [0..2] of Integer',
     'array of TUrlParam', 'array of TGW2Color', 'array of TGW2Quaggan',
     'array of TGW2World', 'array of TGW2Currency', 'array of TGW2File',
-    'array of TGW2Mini'
+    'array of TGW2Mini', 'array of TGW2AccountAchievement',
+    'array of TGW2AccountBankItem', 'array of TGW2AccountFinisher',
+    'array of TGW2AccountInventoryItem', 'array of TGW2AccountMastery',
+    'array of TGW2AccountMaterial', 'array of TGW2AccountWalletItem',
+    'array of TGW2AchievementTier', 'array of TGW2AchievementReward',
+    'array of TGW2AchievementBit', 'array of TGW2Achievement'
   );
 
 var

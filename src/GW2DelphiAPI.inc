@@ -14,7 +14,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0056';
+  CONST_VERSION_REVISION = 'r0057';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -159,6 +159,14 @@ type
       property Id:          string       Read fId          Write fId;
       property Name:        string       Read fName        Write fName;
       property Permissions: TStringArray Read fPermissions Write fPermissions;
+  end;
+
+  // States
+  TStateHoler = record
+    HTTPTimeout: Integer;
+    HTTPClient:  TIdHTTP;
+    AuthString:  string;
+    AuthToken:   TGW2Token;
   end;
 
   // Account
@@ -493,14 +501,6 @@ type
   end;
 
   TGW2MiniArray = array of TGW2Mini;
-
-  // States
-  TStateHoler = record
-    HTTPTimeout: Integer;
-    HTTPClient:  TIdHTTP;
-    AuthString:  string;
-    AuthToken:   TGW2Token;
-  end;
 
 { Classes, procedures and functions }
 // --------------------------------//
