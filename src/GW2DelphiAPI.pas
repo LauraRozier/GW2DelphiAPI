@@ -200,6 +200,9 @@ begin
   if Response.HadError then
     raise Exception.Create(Response.Msg);
 
+  if Response.Msg = '[null]' then
+    raise Exception.Create('Error: Empty response!');
+
   Result := Response.Msg;
 end;
 
@@ -557,10 +560,6 @@ begin
     if Utils.ArrContains(aState.AuthToken.Permissions, 'unlocks') then
     begin
       Reply := aWebHandler.FetchAuthEndpoint(APIv2, v2AccountInventory, nil, aState.AuthString);
-
-      if Reply = '[null]' then
-        raise Exception.Create('Error: The shared inventory is empty!');
-
       JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
       SetLength(Result, JSArr.Count);
 
