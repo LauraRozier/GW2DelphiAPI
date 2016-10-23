@@ -557,7 +557,7 @@ begin
   Utils := TGW2Helper.Create;
 
   if aState.AuthString <> '' then
-    if Utils.ArrContains(aState.AuthToken.Permissions, 'unlocks') then
+    if Utils.ArrContains(aState.AuthToken.Permissions, 'inventories') then
     begin
       Reply := aWebHandler.FetchAuthEndpoint(APIv2, v2AccountInventory, nil, aState.AuthString);
       JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
@@ -570,6 +570,43 @@ begin
 
         JSObject  := JSArr.Items[I] as TJSONObject;
         Result[I] := TJson.JsonToObject<TGW2AccountInventoryItem>(JSObject);
+      end;
+    end else
+      raise Exception.Create('Error: The provided API key does not have enough permissions!')
+  else
+    raise Exception.Create('Error: No valid API key has been entered!');
+end;
+
+
+//* Version: 48
+//* Class: Account
+//* aWebHandler: The API webhandler object
+//* aState: The API state object
+//* Result: Returns an array of materials
+function TGW2APIAccount.GetMaterials(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountMaterialArray;
+var
+  Utils:    TGW2Helper;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
+begin
+  Utils := TGW2Helper.Create;
+
+  if aState.AuthString <> '' then
+    if Utils.ArrContains(aState.AuthToken.Permissions, 'inventories') then
+    begin
+      Reply := aWebHandler.FetchAuthEndpoint(APIv2, v2AccountMaterials, nil, aState.AuthString);
+      JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+      SetLength(Result, JSArr.Count);
+
+      for I := 0 to JSArr.Count - 1 do
+      begin
+        if JSArr.Items[I].Null then
+          Continue;
+
+        JSObject  := JSArr.Items[I] as TJSONObject;
+        Result[I] := TJson.JsonToObject<TGW2AccountMaterial>(JSObject);
       end;
     end else
       raise Exception.Create('Error: The provided API key does not have enough permissions!')
