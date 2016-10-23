@@ -14,7 +14,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0054';
+  CONST_VERSION_REVISION = 'r0055';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -265,6 +265,17 @@ type
 
   TGW2AccountInventoryItemArray = array of TGW2AccountInventoryItem;
 
+  TGW2AccountMastery = class
+    private
+      fId:    Integer;
+      fLevel: Integer;
+    public
+      property id:    Integer Read fId    Write fId;
+      property level: Integer Read fLevel Write fLevel;
+  end;
+
+  TGW2AccountMasteryArray = array of TGW2AccountMastery;
+
   TGW2AccountMaterial = class
     private
       fId:       Integer;
@@ -280,16 +291,16 @@ type
 
   TGW2AccountMaterialArray = array of TGW2AccountMaterial;
 
-  TGW2AccountMastery = class
+  TGW2AccountWalletItem = class
     private
       fId:    Integer;
-      fLevel: Integer;
+      fValue: Integer;
     public
       property id:    Integer Read fId    Write fId;
-      property level: Integer Read fLevel Write fLevel;
+      property value: Integer Read fValue Write fValue;
   end;
 
-  TGW2AccountMasteryArray = array of TGW2AccountMastery;
+  TGW2AccountWalletItemArray = array of TGW2AccountWalletItem;
 
   // Misc
   TGW2Version = class
@@ -474,6 +485,7 @@ type
       function GetRecipes(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
       function GetSkins(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
       function GetTitles(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
+      function GetWallet(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountWalletItemArray;
   end;
 
   { API Misc class }
