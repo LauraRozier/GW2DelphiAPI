@@ -19,12 +19,10 @@ var
   fGW2API:         TGW2API;
   fAPIRequestUrl:  string;
   //fStringArr:      TStringArray;
-  fIntegerArr:     TIntegerArray;
+  //fIntegerArr:     TIntegerArray;
   fTmpString:      string;
   fString:         string;
-  fInteger:        Integer;
-  fInventoryItemArr: TGW2AccountInventoryItemArray;
-  fInventoryItem:    TGW2AccountInventoryItem;
+  //fInteger:        Integer;
   //fParams:         TUrlParams;
 
 begin
@@ -69,19 +67,6 @@ begin
         fTmpString := fTmpString + ', ' + fString;
 
     WriteLn('Permissions: ' + fTmpString);
-
-    WriteLn;
-    WriteLn;
-    fInventoryItemArr := fGW2API.Account.GetInventory(fGW2API.WebHandler, fGW2API.State);
-    WriteLn('Account Shared Inventory:');
-
-    for fInventoryItem in fInventoryItemArr do
-    begin
-      WriteLn(#9 + 'ID: ' + IntToStr(fInventoryItem.id));
-      WriteLn(#9 + 'Count: ' + IntToStr(fInventoryItem.count));
-      WriteLn(#9 + 'Binding: ' + fInventoryItem.binding);
-      WriteLn;
-    end;
 
     FreeAndNil(fGW2API);
   except

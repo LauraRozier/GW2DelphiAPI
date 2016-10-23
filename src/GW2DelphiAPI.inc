@@ -14,7 +14,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0055';
+  CONST_VERSION_REVISION = 'r0056';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -302,6 +302,75 @@ type
 
   TGW2AccountWalletItemArray = array of TGW2AccountWalletItem;
 
+  // Achievements
+  TGW2AchievementTier = class
+    private
+      fCount:  Integer;
+      fPoints: Integer;
+    public
+      property count:  Integer Read fCount  Write fCount;
+      property points: Integer Read fPoints Write fPoints;
+  end;
+
+  TGW2AchievementTierArray = array of TGW2AchievementTier;
+
+  TGW2AchievementReward = class
+    private
+      fId:     Integer;
+      fCount:  Integer;
+      fRegion: string;
+    public
+      property id:     Integer Read fId     Write fId;
+      property count:  Integer Read fCount  Write fCount;
+      property region: string  Read fRegion Write fRegion;
+  end;
+
+  TGW2AchievementRewardArray = array of TGW2AchievementReward;
+
+  TGW2AchievementBit = class
+    private
+      fType: string;
+      fId:   Integer;
+      fText: string;
+    public
+      property type_: string  Read fType Write fType;
+      property id:    Integer Read fId   Write fId;
+      property text:  string  Read fText Write fText;
+  end;
+
+  TGW2AchievementBitArray = array of TGW2AchievementBit;
+
+  TGW2Achievement = class
+    private
+      fId:          Integer;
+      fIcon:        string;
+      fName:        string;
+      fDescription: string;
+      fRequirement: string;
+      fLockedText:  string;
+      fType:        string;
+      fFlags:       TStringArray;
+      fTiers:       TGW2AchievementTierArray;
+      fRewards:     TGW2AchievementRewardArray;
+      fBits:        TGW2AchievementBitArray;
+      fPointCap:    Integer;
+    public
+      property id:          Integer                    Read fId          Write fId;
+      property icon:        string                     Read fIcon        Write fIcon;
+      property name:        string                     Read fName        Write fName;
+      property description: string                     Read fDescription Write fDescription;
+      property requirement: string                     Read fRequirement Write fRequirement;
+      property locked_text: string                     Read fLockedText  Write fLockedText;
+      property type_:       string                     Read fType        Write fType;
+      property flags:       TStringArray               Read fFlags       Write fFlags;
+      property tiers:       TGW2AchievementTierArray   Read fTiers       Write fTiers;
+      property rewards:     TGW2AchievementRewardArray Read fRewards     Write fRewards;
+      property bits:        TGW2AchievementBitArray    Read fBits        Write fBits;
+      property point_cap:   Integer                    Read fPointCap    Write fPointCap;
+  end;
+
+  TGW2AchievementArray = array of TGW2Achievement;
+
   // Misc
   TGW2Version = class
     private
@@ -488,6 +557,13 @@ type
       function GetWallet(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountWalletItemArray;
   end;
 
+  { API Account class }
+  TGW2APIAchievements = class(TObject)
+    public
+      function GetAchievementIDs(aWebHandler: TWebHandler): TIntegerArray;
+      function GetAchievements(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2AchievementArray;
+  end;
+
   { API Misc class }
   TGW2APIMisc = class(TObject)
     public
@@ -509,19 +585,21 @@ type
   { Main API class }
   TGW2API = class(TObject)
     private
-      fStateHolder: TStateHoler;
-      fWebHandler:  TWebHandler;
-      fUtils:       TGW2Helper;
-      fAccount:     TGW2APIAccount;
-      fMisc:        TGW2APIMisc;
+      fStateHolder:  TStateHoler;
+      fWebHandler:   TWebHandler;
+      fUtils:        TGW2Helper;
+      fAccount:      TGW2APIAccount;
+      fAchievements: TGW2APIAchievements;
+      fMisc:         TGW2APIMisc;
     Public
       constructor Create(aTimeoutSeconds: Integer = 15);
       destructor Destroy; Override;
       procedure SetTimeout(aSeconds: SmallInt);
       function Authenticate(aAuthString: string): string;
-      Property State:      TStateHoler    Read fStateHolder;
-      Property WebHandler: TWebHandler    Read fWebHandler;
-      Property Utils:      TGW2Helper     Read fUtils;
-      Property Misc:       TGW2APIMisc    Read fMisc;
-      Property Account:    TGW2APIAccount Read fAccount;
+      Property State:        TStateHoler         Read fStateHolder;
+      Property WebHandler:   TWebHandler         Read fWebHandler;
+      Property Utils:        TGW2Helper          Read fUtils;
+      Property Account:      TGW2APIAccount      Read fAccount;
+      Property Achievements: TGW2APIAchievements Read fAchievements;
+      Property Misc:         TGW2APIMisc         Read fMisc;
   end;

@@ -374,6 +374,7 @@ begin
 end;
 
 
+{ API Account functions class }
 //* Version: 37
 //* Class: Account
 //* aWebHandler: The API webhandler object
@@ -861,6 +862,58 @@ begin
       raise Exception.Create('Error: The provided API key does not have enough permissions!')
   else
     raise Exception.Create('Error: No valid API key has been entered!');
+end;
+
+
+{ API Achievements functions class }
+//* Version: 56
+//* Class: Achievements
+//* aWebHandler: The API webhandler object
+//* Result: Returns an array achievement IDs
+function TGW2APIAchievements.GetAchievementIDs(aWebHandler: TWebHandler): TIntegerArray;
+var
+  Reply:    string;
+  JSArr:    TJSONArray;
+  I:        Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Achievements, nil);
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+  begin
+    if JSArr.Items[I].Null then
+      Continue;
+
+    Result[I] := StrToInt(JSArr.Items[I].Value);
+  end;
+end;
+
+
+//* Version: 56
+//* Class: Achievements
+//* aWebHandler: The API webhandler object
+//* aParams: The parameters (ids and lang)
+//* Result: Returns an array of achievements
+function TGW2APIAchievements.GetAchievements(aWebHandler: TWebHandler; aParams: TUrlParams): TGW2AchievementArray;
+var
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
+begin
+  Reply := aWebHandler.FetchEndpoint(APIv2, v2Achievements, aParams);
+  JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+  SetLength(Result, JSArr.Count);
+
+  for I := 0 to JSArr.Count - 1 do
+  begin
+    if JSArr.Items[I].Null then
+      Continue;
+
+    JSObject  := JSArr.Items[I] as TJSONObject;
+    Result[I] := TJson.JsonToObject<TGW2Achievement>(JSObject);
+  end;
 end;
 
 
