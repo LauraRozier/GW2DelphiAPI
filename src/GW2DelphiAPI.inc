@@ -14,7 +14,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0049';
+  CONST_VERSION_REVISION = 'r0050';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -469,6 +469,7 @@ type
       function GetInventory(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountInventoryItemArray;
       function GetMasteries(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountMasteryArray;
       function GetMaterials(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountMaterialArray;
+      function GetMinis(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
   end;
 
   { API Misc class }
