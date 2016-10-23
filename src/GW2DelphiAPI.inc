@@ -14,7 +14,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0044';
+  CONST_VERSION_REVISION = 'r0045';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -161,6 +161,97 @@ type
       property Permissions: TStringArray Read fPermissions Write fPermissions;
   end;
 
+  // Account
+  TGW2Account = class
+    private
+      fId:            string;
+      fName:          string;
+      fWorld:         Integer;
+      fCommander:     Boolean;
+      fGuilds:        TStringArray;
+      fCreated:       string;
+      fAccess:        string;
+      fFractal_level: Integer;
+      fDaily_ap:      Integer;
+      fMonthly_ap:    Integer;
+      fWvw_rank:      Integer;
+    public
+      property id:            string       Read fId            Write fId;
+      property Name:          string       Read fName          Write fName;
+      property World:         Integer      Read fWorld         Write fWorld;
+      property Commander:     Boolean      Read fCommander     Write fCommander;
+      property Guilds:        TStringArray Read fGuilds        Write fGuilds;
+      property Created:       string       Read fCreated       Write fCreated; // ISO-8601 standard timestamp
+      property Access:        string       Read fAccess        Write fAccess;
+      {
+        Possible values for Access:
+          'None'          – should probably never happen
+          'PlayForFree'   – has not yet purchased the game
+          'GuildWars2'    – has purchased base game, but no expansions
+          'HeartOfThorns' – has purchased HoT
+      }
+      // The properties below require the progression permission flag
+      property Fractal_level: Integer      Read fFractal_level Write fFractal_level;
+      property Daily_ap:      Integer      Read fDaily_ap      Write fDaily_ap;
+      property Monthly_ap:    Integer      Read fMonthly_ap    Write fMonthly_ap;
+      property Wvw_rank:      Integer      Read fWvw_rank      Write fWvw_rank;
+  end;
+
+  TGW2AccountAchievement = class
+    private
+      fId:       Integer;
+      fDone:     Boolean;
+      fUnlocked: Boolean;
+      fBits:     TIntegerArray;
+      fCurrent:  Integer;
+      fMax:      Integer;
+      fRepeated: Integer;
+    public
+      property id:       Integer       Read fId       Write fId;
+      property Done:     Boolean       Read fDone     Write fDone;
+      property Unlocked: Boolean       Read fUnlocked Write fUnlocked;
+      property Bits:     TIntegerArray Read fBits     Write fBits;
+      property Current:  Integer       Read fCurrent  Write fCurrent;
+      property Max:      Integer       Read fMax      Write fMax;
+      property Repeated: Integer       Read fRepeated Write fRepeated;
+  end;
+
+  TGW2AccountAchievementArray = array of TGW2AccountAchievement;
+
+  TGW2AccountBankItem = class
+    private
+      fId:        Integer;
+      fCount:     Integer;
+      fBinding:   string;
+      fSkin:      Integer;
+      fUpgrades:  TIntegerArray;
+      fInfusions: TIntegerArray;
+      fBoundTo:   string;
+    public
+      property id:        Integer       Read fId        Write fId;
+      property Count:     Integer       Read fCount     Write fCount;
+      property Binding:   string        Read fBinding   Write fBinding;
+      property Skin:      Integer       Read fSkin      Write fSkin;
+      property Upgrades:  TIntegerArray Read fUpgrades  Write fUpgrades;
+      property Infusions: TIntegerArray Read fInfusions Write fInfusions;
+      property Bound_to:  string        Read fBoundTo   Write fBoundTo;
+  end;
+
+  TGW2AccountBankItemArray = array of TGW2AccountBankItem;
+
+  TGW2AccountFinisher = class
+    private
+      fId:        Integer;
+      fPermanent: Boolean;
+      fQuantity:  Integer;
+    public
+      property id:        Integer Read fId        Write fId;
+      property permanent: Boolean Read fPermanent Write fPermanent;
+      property quantity:  Integer Read fQuantity  Write fQuantity;
+  end;
+
+  TGW2AccountFinisherArray = array of TGW2AccountFinisher;
+
   // Misc
   TGW2Version = class
     private
@@ -284,83 +375,6 @@ type
 
   TGW2MiniArray = array of TGW2Mini;
 
-  TGW2Account = class
-    private
-      fId:            string;
-      fName:          string;
-      fWorld:         Integer;
-      fCommander:     Boolean;
-      fGuilds:        TStringArray;
-      fCreated:       string;
-      fAccess:        string;
-      fFractal_level: Integer;
-      fDaily_ap:      Integer;
-      fMonthly_ap:    Integer;
-      fWvw_rank:      Integer;
-    public
-      property id:            string       Read fId            Write fId;
-      property Name:          string       Read fName          Write fName;
-      property World:         Integer      Read fWorld         Write fWorld;
-      property Commander:     Boolean      Read fCommander     Write fCommander;
-      property Guilds:        TStringArray Read fGuilds        Write fGuilds;
-      property Created:       string       Read fCreated       Write fCreated; // ISO-8601 standard timestamp
-      property Access:        string       Read fAccess        Write fAccess;
-      {
-        Possible values for Access:
-          'None'          – should probably never happen
-          'PlayForFree'   – has not yet purchased the game
-          'GuildWars2'    – has purchased base game, but no expansions
-          'HeartOfThorns' – has purchased HoT
-      }
-      // The properties below require the progression permission flag
-      property Fractal_level: Integer      Read fFractal_level Write fFractal_level;
-      property Daily_ap:      Integer      Read fDaily_ap      Write fDaily_ap;
-      property Monthly_ap:    Integer      Read fMonthly_ap    Write fMonthly_ap;
-      property Wvw_rank:      Integer      Read fWvw_rank      Write fWvw_rank;
-  end;
-
-  TGW2AccountAchievement = class
-    private
-      fId:       Integer;
-      fDone:     Boolean;
-      fUnlocked: Boolean;
-      fBits:     TIntegerArray;
-      fCurrent:  Integer;
-      fMax:      Integer;
-      fRepeated: Integer;
-    public
-      property id:       Integer       Read fId       Write fId;
-      property Done:     Boolean       Read fDone     Write fDone;
-      property Unlocked: Boolean       Read fUnlocked Write fUnlocked;
-      property Bits:     TIntegerArray Read fBits     Write fBits;
-      property Current:  Integer       Read fCurrent  Write fCurrent;
-      property Max:      Integer       Read fMax      Write fMax;
-      property Repeated: Integer       Read fRepeated Write fRepeated;
-  end;
-
-  TGW2AccountAchievementArray = array of TGW2AccountAchievement;
-
-  TGW2AccountBankItem = class
-    private
-      fId:        Integer;
-      fCount:     Integer;
-      fBinding:   string;
-      fSkin:      Integer;
-      fUpgrades:  TIntegerArray;
-      fInfusions: TIntegerArray;
-      fBoundTo:   string;
-    public
-      property id:        Integer       Read fId        Write fId;
-      property Count:     Integer       Read fCount     Write fCount;
-      property Binding:   string        Read fBinding   Write fBinding;
-      property Skin:      Integer       Read fSkin      Write fSkin;
-      property Upgrades:  TIntegerArray Read fUpgrades  Write fUpgrades;
-      property Infusions: TIntegerArray Read fInfusions Write fInfusions;
-      property Bound_to:  string        Read fBoundTo   Write fBoundTo;
-  end;
-
-  TGW2AccountBankItemArray = array of TGW2AccountBankItem;
-
   // States
   TStateHoler = record
     HTTPTimeout: Integer;
@@ -412,6 +426,7 @@ type
       function GetAchievements(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountAchievementArray;
       function GetBank(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountBankItemArray;
       function GetDyes(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
+      function GetFinishers(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountFinisherArray;
   end;
 
   { API Misc class }
