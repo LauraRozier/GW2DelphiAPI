@@ -14,7 +14,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0052';
+  CONST_VERSION_REVISION = 'r0053';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -472,6 +472,7 @@ type
       function GetMinis(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
       function GetOutfits(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
       function GetRecipes(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
+      function GetSkins(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
   end;
 
   { API Misc class }
