@@ -14,7 +14,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0051';
+  CONST_VERSION_REVISION = 'r0052';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -471,6 +471,7 @@ type
       function GetMaterials(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountMaterialArray;
       function GetMinis(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
       function GetOutfits(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
+      function GetRecipes(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
   end;
 
   { API Misc class }
