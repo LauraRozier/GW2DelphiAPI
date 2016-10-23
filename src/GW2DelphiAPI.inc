@@ -4,6 +4,25 @@ uses
   // Indy units
   IdHTTP, IdException, IdExceptionCore, IdStack, IdSSLOpenSSL;
 
+{ Default values }
+const
+  // Generic constants
+  CONST_ONE_SECOND = 1000;
+
+  // GW2 Delphi API constants
+  CONST_VERSION_PREFIX   = 'Alpha ';
+  CONST_VERSION_MAJOR    = '0';
+  CONST_VERSION_MINOR    = '.001';
+  CONST_VERSION_BUILD    = '.0001 ';
+  CONST_VERSION_REVISION = 'r0042';
+  CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
+                           CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
+                           CONST_VERSION_REVISION;
+  CONST_VERSION_SHORT    = CONST_VERSION_MAJOR + CONST_VERSION_MINOR;
+
+  // GW2 API constants
+  CONST_API_URL_BASE = 'https://api.guildwars2.com/';
+
 { API Enum types }
 type
   TAPIVersion = (
@@ -63,7 +82,55 @@ type
     PermSize
   );
 
+{ API Enum textual values }
+const
+  CONST_API_Versions: array [TAPIVersion] of string = (
+    '', 'v1', 'v2'
+  );
+
+  CONST_API_Languages: array [TAPILangs] of string = (
+    // API v1 and v2
+    'en', 'es', 'de', 'fr',
+    // API v2 only
+    'ko', 'zh'
+  );
+
+  CONST_API_Functions: array [TAPIFunction] of string = (
+    // API version 1
+    'continents.json', 'event_details.json', 'event_names.json', 'events.json',
+    'files.json', 'guild_details.json', 'item_details.json', 'items.json',
+    'map_floor.json', 'map_names.json', 'maps.json', 'recipe_details.json',
+    'recipes.json', 'skin_details.json', 'skins.json', 'world_names.json',
+    'wvw/match_details.json', 'wvw/matches.json', 'wvw/objective_names.json',
+    // API version 2
+    'account', 'account/achievements', 'account/bank', 'account/dyes',
+    'account/finishers', 'account/inventory', 'account/masteries',
+    'account/materials', 'account/minis', 'account/outfits', 'account/recipes',
+    'account/skins', 'account/titles', 'account/wallet', 'achievements',
+    'achievements/categories', 'achievements/daily',
+    'achievements/daily/tomorrow', 'achievements/groups', 'adventures',
+    'adventures/%s/leaderboards', 'adventures/%s/leaderboards/%s',
+    'backstory/answers', 'backstory/questions', 'build', 'characters',
+    'characters/%s/backstory', 'characters/%s/core', 'characters/%s/crafting',
+    'characters/%s/equipment', 'characters/%s/heropoints',
+    'characters/%s/inventory', 'characters/%s/recipes',
+    'characters/%s/specializations', 'characters/%s/training', 'colors',
+    'commerce/exchange', 'commerce/listings', 'commerce/prices',
+    'commerce/transactions', 'continents', 'currencies', 'emblem', 'events',
+    'events-state', 'files', 'finishers', 'guild/%s', 'guild/%s/log',
+    'guild/%s/members', 'guild/%s/ranks', 'guild/%s/stash', 'guild/%s/teams',
+    'guild/%s/treasury', 'guild/%s/upgrades', 'guild/permissions',
+    'guild/search', 'guild/upgrades', 'items', 'itemstats', 'legends', 'maps',
+    'masteries', 'materials', 'minis', 'outfits', 'pets', 'professions', 'pvp',
+    'pvp/amulets', 'pvp/games', 'pvp/seasons', 'pvp/seasons/%s/leaderboards',
+    'pvp/seasons/%s/leaderboards/%s', 'pvp/standings', 'pvp/stats', 'quaggans',
+    'recipes', 'recipes/search', 'skills', 'skins', 'specializations',
+    'stories', 'stories/seasons', 'titles', 'tokeninfo', 'traits', 'worlds',
+    'wvw/abilities', 'wvw/matches', 'wvw/objectives'
+  );
+
 { API data types }
+type
   // Arrays
   TIntegerArray = array of Integer;
   TStringArray  = array of string;
@@ -302,72 +369,9 @@ type
     AuthToken:   TGW2Token;
   end;
 
-{ Default values }
-const
-  // Generic constants
-  CONST_ONE_SECOND = 1000;
-
-  // GW2 Delphi API constants
-  CONST_VERSION_PREFIX   = 'Alpha ';
-  CONST_VERSION_MAJOR    = '0';
-  CONST_VERSION_MINOR    = '.001';
-  CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0042';
-  CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
-                           CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
-                           CONST_VERSION_REVISION;
-  CONST_VERSION_SHORT    = CONST_VERSION_MAJOR + CONST_VERSION_MINOR;
-
-  // GW2 API constants
-  CONST_API_URL_BASE = 'https://api.guildwars2.com/';
-
-  CONST_API_Versions: array [TAPIVersion] of string = (
-    '', 'v1', 'v2'
-  );
-
-  CONST_API_Languages: array [TAPILangs] of string = (
-    // API v1 and v2
-    'en', 'es', 'de', 'fr',
-    // API v2 only
-    'ko', 'zh'
-  );
-
-  CONST_API_Functions: array [TAPIFunction] of string = (
-    // API version 1
-    'continents.json', 'event_details.json', 'event_names.json', 'events.json',
-    'files.json', 'guild_details.json', 'item_details.json', 'items.json',
-    'map_floor.json', 'map_names.json', 'maps.json', 'recipe_details.json',
-    'recipes.json', 'skin_details.json', 'skins.json', 'world_names.json',
-    'wvw/match_details.json', 'wvw/matches.json', 'wvw/objective_names.json',
-    // API version 2
-    'account', 'account/achievements', 'account/bank', 'account/dyes',
-    'account/finishers', 'account/inventory', 'account/masteries',
-    'account/materials', 'account/minis', 'account/outfits', 'account/recipes',
-    'account/skins', 'account/titles', 'account/wallet', 'achievements',
-    'achievements/categories', 'achievements/daily',
-    'achievements/daily/tomorrow', 'achievements/groups', 'adventures',
-    'adventures/%s/leaderboards', 'adventures/%s/leaderboards/%s',
-    'backstory/answers', 'backstory/questions', 'build', 'characters',
-    'characters/%s/backstory', 'characters/%s/core', 'characters/%s/crafting',
-    'characters/%s/equipment', 'characters/%s/heropoints',
-    'characters/%s/inventory', 'characters/%s/recipes',
-    'characters/%s/specializations', 'characters/%s/training', 'colors',
-    'commerce/exchange', 'commerce/listings', 'commerce/prices',
-    'commerce/transactions', 'continents', 'currencies', 'emblem', 'events',
-    'events-state', 'files', 'finishers', 'guild/%s', 'guild/%s/log',
-    'guild/%s/members', 'guild/%s/ranks', 'guild/%s/stash', 'guild/%s/teams',
-    'guild/%s/treasury', 'guild/%s/upgrades', 'guild/permissions',
-    'guild/search', 'guild/upgrades', 'items', 'itemstats', 'legends', 'maps',
-    'masteries', 'materials', 'minis', 'outfits', 'pets', 'professions', 'pvp',
-    'pvp/amulets', 'pvp/games', 'pvp/seasons', 'pvp/seasons/%s/leaderboards',
-    'pvp/seasons/%s/leaderboards/%s', 'pvp/standings', 'pvp/stats', 'quaggans',
-    'recipes', 'recipes/search', 'skills', 'skins', 'specializations',
-    'stories', 'stories/seasons', 'titles', 'tokeninfo', 'traits', 'worlds',
-    'wvw/abilities', 'wvw/matches', 'wvw/objectives'
-  );
-
-{ Web handler class }
-type
+{ Classes, procedures and functions }
+// --------------------------------//
+  { Web handler class }
   TWebHandler = class(TObject)
     private
       fHTTPClient: TIdHTTP;
@@ -390,7 +394,7 @@ type
       Property HTTPClient: TIdHTTP Read fHTTPClient Write fHTTPClient;
   end;
 
-{ Utilities }
+  { Utilities }
   TGW2Helper = class
     public
       function StringToEnum<TEnum>(const aString: string): TEnum;
@@ -401,8 +405,15 @@ type
       function ArrContains(aArr: TIntegerArray; aValue: Integer): Boolean; Overload;
   end;
 
-type
-{ API Misc functions class }
+  { API Account class }
+  TGW2APIAccount = class(TObject)
+    public
+      function GetAccount(aWebHandler: TWebHandler; aState: TStateHoler): TGW2Account;
+      function GetAchievements(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountAchievementArray;
+      function GetBank(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountBankItemArray;
+  end;
+
+  { API Misc class }
   TGW2APIMisc = class(TObject)
     public
       function GetBuild(aWebHandler:       TWebHandler):                      TGW2Version;
@@ -420,21 +431,14 @@ type
       function GetMinis(aWebHandler:       TWebHandler; aParams: TUrlParams): TGW2MiniArray;
   end;
 
-TGW2APIAccount = class(TObject)
-  public
-    function GetAccount(aWebHandler: TWebHandler; aState: TStateHoler): TGW2Account;
-    function GetAchievements(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountAchievementArray;
-    function GetBank(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountBankItemArray;
-end;
-
-{ Main API class }
+  { Main API class }
   TGW2API = class(TObject)
     private
       fStateHolder: TStateHoler;
       fWebHandler:  TWebHandler;
       fUtils:       TGW2Helper;
-      fMisc:        TGW2APIMisc;
       fAccount:     TGW2APIAccount;
+      fMisc:        TGW2APIMisc;
     Public
       constructor Create(aTimeoutSeconds: Integer = 15);
       destructor Destroy; Override;

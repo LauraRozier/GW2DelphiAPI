@@ -371,6 +371,98 @@ begin
 end;
 
 
+//* Version: 37
+//* Class: Account
+//* aWebHandler: The API webhandler object
+//* aState: The API state object
+//* Result: Returns the account info
+function TGW2APIAccount.GetAccount(aWebHandler: TWebHandler; aState: TStateHoler): TGW2Account;
+var
+  Utils: TGW2Helper;
+begin
+  Utils := TGW2Helper.Create;
+
+  if aState.AuthString <> '' then
+    if Utils.ArrContains(aState.AuthToken.Permissions, 'account') then
+      Result := aWebHandler.FetchAuthEndpoint<TGW2Account>(APIv2, v2Account, nil, aState.AuthString)
+    else
+      raise Exception.Create('Error: The provided API key does not have enough permissions!')
+  else
+    raise Exception.Create('Error: No valid API key has been entered!');
+end;
+
+
+//* Version: 41
+//* Class: Account
+//* aWebHandler: The API webhandler object
+//* aState: The API state object
+//* Result: Returns an array of account achievements
+function TGW2APIAccount.GetAchievements(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountAchievementArray;
+var
+  Utils:    TGW2Helper;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
+begin
+  Utils := TGW2Helper.Create;
+
+  if aState.AuthString <> '' then
+    if Utils.ArrContains(aState.AuthToken.Permissions, 'progression') then
+    begin
+      Reply := aWebHandler.FetchAuthEndpoint(APIv2, v2AccountAchievements, nil, aState.AuthString);
+      JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+      SetLength(Result, JSArr.Count);
+
+      for I := 0 to JSArr.Count - 1 do
+      begin
+        JSObject  := JSArr.Items[I] as TJSONObject;
+        Result[I] := TJson.JsonToObject<TGW2AccountAchievement>(JSObject);
+      end;
+    end else
+      raise Exception.Create('Error: The provided API key does not have enough permissions!')
+  else
+    raise Exception.Create('Error: No valid API key has been entered!');
+end;
+
+
+//* Version: 42
+//* Class: Account
+//* aWebHandler: The API webhandler object
+//* aState: The API state object
+//* Result: Returns an array of account bank items
+function TGW2APIAccount.GetBank(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountBankItemArray;
+var
+  Utils:    TGW2Helper;
+  Reply:    string;
+  JSArr:    TJSONArray;
+  JSObject: TJSONObject;
+  I:        Integer;
+begin
+  Utils := TGW2Helper.Create;
+
+  if aState.AuthString <> '' then
+    if Utils.ArrContains(aState.AuthToken.Permissions, 'inventories') then
+    begin
+      Reply := aWebHandler.FetchAuthEndpoint(APIv2, v2AccountBank, nil, aState.AuthString);
+      JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
+      SetLength(Result, JSArr.Count);
+
+      for I := 0 to JSArr.Count - 1 do
+      begin
+        if JSArr.Items[I].Null then
+          Continue;
+
+        JSObject  := JSArr.Items[I] as TJSONObject;
+        Result[I] := TJson.JsonToObject<TGW2AccountBankItem>(JSObject);
+      end;
+    end else
+      raise Exception.Create('Error: The provided API key does not have enough permissions!')
+  else
+    raise Exception.Create('Error: No valid API key has been entered!');
+end;
+
+
 { API Misc functions class }
 //* Version: 9
 //* Class: Misc
@@ -637,98 +729,6 @@ begin
     JSObject  := JSArr.Items[I] as TJSONObject;
     Result[I] := TJson.JsonToObject<TGW2Mini>(JSObject);
   end;
-end;
-
-
-//* Version: 37
-//* Class: Account
-//* aWebHandler: The API webhandler object
-//* aState: The API state object
-//* Result: Returns the account info
-function TGW2APIAccount.GetAccount(aWebHandler: TWebHandler; aState: TStateHoler): TGW2Account;
-var
-  Utils: TGW2Helper;
-begin
-  Utils := TGW2Helper.Create;
-
-  if aState.AuthString <> '' then
-    if Utils.ArrContains(aState.AuthToken.Permissions, 'account') then
-      Result := aWebHandler.FetchAuthEndpoint<TGW2Account>(APIv2, v2Account, nil, aState.AuthString)
-    else
-      raise Exception.Create('Error: The provided API key does not have enough permissions!')
-  else
-    raise Exception.Create('Error: No valid API key has been entered!');
-end;
-
-
-//* Version: 41
-//* Class: Account
-//* aWebHandler: The API webhandler object
-//* aState: The API state object
-//* Result: Returns an array of account achievements
-function TGW2APIAccount.GetAchievements(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountAchievementArray;
-var
-  Utils:    TGW2Helper;
-  Reply:    string;
-  JSArr:    TJSONArray;
-  JSObject: TJSONObject;
-  I:        Integer;
-begin
-  Utils := TGW2Helper.Create;
-
-  if aState.AuthString <> '' then
-    if Utils.ArrContains(aState.AuthToken.Permissions, 'progression') then
-    begin
-      Reply := aWebHandler.FetchAuthEndpoint(APIv2, v2AccountAchievements, nil, aState.AuthString);
-      JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
-      SetLength(Result, JSArr.Count);
-
-      for I := 0 to JSArr.Count - 1 do
-      begin
-        JSObject  := JSArr.Items[I] as TJSONObject;
-        Result[I] := TJson.JsonToObject<TGW2AccountAchievement>(JSObject);
-      end;
-    end else
-      raise Exception.Create('Error: The provided API key does not have enough permissions!')
-  else
-    raise Exception.Create('Error: No valid API key has been entered!');
-end;
-
-
-//* Version: 42
-//* Class: Account
-//* aWebHandler: The API webhandler object
-//* aState: The API state object
-//* Result: Returns an array of account bank items
-function TGW2APIAccount.GetBank(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountBankItemArray;
-var
-  Utils:    TGW2Helper;
-  Reply:    string;
-  JSArr:    TJSONArray;
-  JSObject: TJSONObject;
-  I:        Integer;
-begin
-  Utils := TGW2Helper.Create;
-
-  if aState.AuthString <> '' then
-    if Utils.ArrContains(aState.AuthToken.Permissions, 'inventories') then
-    begin
-      Reply := aWebHandler.FetchAuthEndpoint(APIv2, v2AccountBank, nil, aState.AuthString);
-      JSArr := TJSONObject.ParseJSONValue(Reply) as TJSONArray;
-      SetLength(Result, JSArr.Count);
-
-      for I := 0 to JSArr.Count - 1 do
-      begin
-        if JSArr.Items[I].Null then
-          Continue;
-
-        JSObject  := JSArr.Items[I] as TJSONObject;
-        Result[I] := TJson.JsonToObject<TGW2AccountBankItem>(JSObject);
-      end;
-    end else
-      raise Exception.Create('Error: The provided API key does not have enough permissions!')
-  else
-    raise Exception.Create('Error: No valid API key has been entered!');
 end;
 
 
