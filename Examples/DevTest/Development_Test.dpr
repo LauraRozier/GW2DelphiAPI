@@ -19,14 +19,11 @@ var
   fGW2API:         TGW2API;
   fAPIRequestUrl:  string;
   //fStringArr:      TStringArray;
-  //fIntegerArr:     TIntegerArray;
+  fIntegerArr:     TIntegerArray;
   fTmpString:      string;
   fString:         string;
   fInteger:        Integer;
   //fParams:         TUrlParams;
-  fAccount:        TGW2Account;
-  fBankItemArr:    TGW2AccountBankItemArray;
-  fBankItem:       TGW2AccountBankItem;
 
 begin
   try
@@ -73,68 +70,18 @@ begin
 
     WriteLn;
     WriteLn;
-    WriteLn('Account:');
-    fAccount   := fGW2API.Account.GetAccount(fGW2API.WebHandler, fGW2API.State);
+    fIntegerArr := fGW2API.Account.GetDyes(fGW2API.WebHandler, fGW2API.State);
+    WriteLn('Account Dyes:');
     fTmpString := '';
-    WriteLn;
-    WriteLn('ID: '    +     fAccount.id);
-    WriteLn('Name: '  +     fAccount.Name);
-    WriteLn('World: ' +     IntToStr(fAccount.World));
-    WriteLn('Commander: ' + BoolToStr(fAccount.Commander));
 
-    for fString in fAccount.Guilds do
+    for fInteger in fIntegerArr do
       if fTmpString = '' then
-        fTmpString := fString
+        fTmpString := IntToStr(fInteger)
       else
-        fTmpString := fTmpString + ', ' + fString;
+        fTmpString := fTmpString + ', ' + IntToStr(fInteger);
 
-    WriteLn('Guilds: '        + fTmpString);
-    WriteLn('Created: '       + fAccount.Created);
-    WriteLn('Access: '        + fAccount.Access);
-    WriteLn('Fractal_level: ' + IntToStr(fAccount.Fractal_level));
-    WriteLn('Daily_ap: '      + IntToStr(fAccount.Daily_ap));
-    WriteLn('Monthly_ap: '    + IntToStr(fAccount.Monthly_ap));
-    WriteLn('Wvw_rank: '      + IntToStr(fAccount.Wvw_rank));
-
+    WriteLn(#9 + 'IDs: ' + fTmpString);
     WriteLn;
-    WriteLn;
-    fBankItemArr := fGW2API.Account.GetBank(fGW2API.WebHandler, fGW2API.State);
-    WriteLn('Account Bank:');
-
-    for fBankItem in fBankItemArr do
-    begin
-      if fBankItem = nil then
-      begin
-        WriteLn(#9 + 'Empty');
-        WriteLn;
-        Continue;
-      end;
-
-      WriteLn(#9 + 'ID: '        + IntToStr(fBankItem.id));
-      WriteLn(#9 + 'Count: '     + IntToStr(fBankItem.Count));
-      WriteLn(#9 + 'Skin: '      + IntToStr(fBankItem.Skin));
-      fTmpString := '';
-
-      for fInteger in fBankItem.Upgrades do
-        if fTmpString = '' then
-          fTmpString := IntToStr(fInteger)
-        else
-          fTmpString := fTmpString + ', ' + IntToStr(fInteger);
-
-      WriteLn(#9 + 'Upgrades: '  + fTmpString);
-      fTmpString := '';
-
-      for fInteger in fBankItem.Infusions do
-        if fTmpString = '' then
-          fTmpString := IntToStr(fInteger)
-        else
-          fTmpString := fTmpString + ', ' + IntToStr(fInteger);
-
-      WriteLn(#9 + 'Infusions: ' + fTmpString);
-      WriteLn(#9 + 'Binding: '   + fBankItem.Binding);
-      WriteLn(#9 + 'Bound_to: '  + fBankItem.Bound_to);
-      WriteLn;
-    end;
 
     FreeAndNil(fGW2API);
   except

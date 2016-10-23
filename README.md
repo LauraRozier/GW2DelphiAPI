@@ -8,10 +8,7 @@ Already implemented:
 * Fetching open API endpoint info
 * Fetching authenticated API endpoint info
 * Everything with a checkmark under 'Supported'
-
-Required functionality:  
 * Error handeling
-* Permission strings to enums and back
 
 ###Feature list:
 
@@ -44,7 +41,7 @@ Required functionality:
 | `/v2/account`                             | ✔         |         |  
 | `/v2/account/achievements`                | ✔         |         |  
 | `/v2/account/bank`                        | ✔         |         |  
-| `/v2/account/dyes`                        |           | ✔       |  
+| `/v2/account/dyes`                        | ✔         |         |  
 | `/v2/account/finishers`                   |           | ✔       |  
 | `/v2/account/inventory`                   |           | ✔       |  
 | `/v2/account/masteries`                   |           | ✔       |  

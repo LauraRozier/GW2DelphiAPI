@@ -14,7 +14,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0042';
+  CONST_VERSION_REVISION = 'r0044';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -411,6 +411,7 @@ type
       function GetAccount(aWebHandler: TWebHandler; aState: TStateHoler): TGW2Account;
       function GetAchievements(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountAchievementArray;
       function GetBank(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountBankItemArray;
+      function GetDyes(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
   end;
 
   { API Misc class }
