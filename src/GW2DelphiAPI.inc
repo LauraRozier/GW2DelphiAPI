@@ -14,7 +14,7 @@ const
   CONST_VERSION_MAJOR    = '0';
   CONST_VERSION_MINOR    = '.001';
   CONST_VERSION_BUILD    = '.0001 ';
-  CONST_VERSION_REVISION = 'r0045';
+  CONST_VERSION_REVISION = 'r0046';
   CONST_VERSION          = CONST_VERSION_PREFIX + CONST_VERSION_MAJOR +
                            CONST_VERSION_MINOR  + CONST_VERSION_BUILD +
                            CONST_VERSION_REVISION;
@@ -252,6 +252,19 @@ type
 
   TGW2AccountFinisherArray = array of TGW2AccountFinisher;
 
+  TGW2AccountInventoryItem = class
+    private
+      fId:      Integer;
+      fCount:   Integer;
+      fBinding: string;
+    public
+      property id:      Integer Read fId      Write fId;
+      property count:   Integer Read fCount   Write fCount;
+      property binding: string  Read fBinding Write fBinding;
+  end;
+
+  TGW2AccountInventoryItemArray = array of TGW2AccountInventoryItem;
+
   // Misc
   TGW2Version = class
     private
@@ -427,6 +440,7 @@ type
       function GetBank(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountBankItemArray;
       function GetDyes(aWebHandler: TWebHandler; aState: TStateHoler): TIntegerArray;
       function GetFinishers(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountFinisherArray;
+      function GetInventory(aWebHandler: TWebHandler; aState: TStateHoler): TGW2AccountInventoryItemArray;
   end;
 
   { API Misc class }

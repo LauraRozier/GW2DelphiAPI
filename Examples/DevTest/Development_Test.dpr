@@ -23,6 +23,8 @@ var
   fTmpString:      string;
   fString:         string;
   fInteger:        Integer;
+  fInventoryItemArr: TGW2AccountInventoryItemArray;
+  fInventoryItem:    TGW2AccountInventoryItem;
   //fParams:         TUrlParams;
 
 begin
@@ -70,18 +72,16 @@ begin
 
     WriteLn;
     WriteLn;
-    fIntegerArr := fGW2API.Account.GetDyes(fGW2API.WebHandler, fGW2API.State);
-    WriteLn('Account Dyes:');
-    fTmpString := '';
+    fInventoryItemArr := fGW2API.Account.GetInventory(fGW2API.WebHandler, fGW2API.State);
+    WriteLn('Account Shared Inventory:');
 
-    for fInteger in fIntegerArr do
-      if fTmpString = '' then
-        fTmpString := IntToStr(fInteger)
-      else
-        fTmpString := fTmpString + ', ' + IntToStr(fInteger);
-
-    WriteLn(#9 + 'IDs: ' + fTmpString);
-    WriteLn;
+    for fInventoryItem in fInventoryItemArr do
+    begin
+      WriteLn(#9 + 'ID: ' + IntToStr(fInventoryItem.id));
+      WriteLn(#9 + 'Count: ' + IntToStr(fInventoryItem.count));
+      WriteLn(#9 + 'Binding: ' + fInventoryItem.binding);
+      WriteLn;
+    end;
 
     FreeAndNil(fGW2API);
   except
